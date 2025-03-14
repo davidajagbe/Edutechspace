@@ -1,24 +1,35 @@
 import React, { useState,useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink,useNavigate } from 'react-router-dom';
 import logoiii from '../assets/logoii.png';
 import Cookies from 'js-cookie';
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 
 const Navbar = () => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
-  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = Cookies.get('token');
-    if (token) {
-      setIsLoggedIn(true);
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        const user = JSON.parse(storedUser);
-        setUserName(user.name || 'User');
+    const checkAuth = () => {
+      const token = Cookies.get('token');
+      if (token) {
+        setIsLoggedIn(true);
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          const user = JSON.parse(storedUser);
+          setUserName(user.name || 'User');
+        }
+      } else {
+        setIsLoggedIn(false);
+        setUserName('');
       }
-    }
+    };
+
+    checkAuth();
+    window.addEventListener('storage', checkAuth);
+    return () => window.removeEventListener('storage', checkAuth);
   }, []);
 
   const handleLogout = () => {
@@ -26,8 +37,8 @@ const Navbar = () => {
     localStorage.removeItem('user');
     setIsLoggedIn(false);
     setUserName('');
-    setShowLogoutPopup(false);
-    window.location.href = '/'; // Redirect to home after logout
+    setShowLogoutModal(false);
+    navigate('/');
   };
 
   return (
@@ -48,7 +59,7 @@ const Navbar = () => {
               <span className="text-lg font-medium text-blue-950">{userName}</span>
               <button 
                 className="bg-slate-200 text-blue-950 px-4 py-2 rounded-lg text-lg font-medium hover:bg-blue-950 hover:text-white transition-all"
-                onClick={() => setShowLogoutPopup(true)}
+                onClick={() => setShowLogoutModal(true)}
               >
                 Logout
               </button>
@@ -59,17 +70,15 @@ const Navbar = () => {
           </button>
         </div>
       </nav>
-      {showLogoutPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <p className="text-lg font-medium text-neutral-900">Are you sure you want to logout?</p>
-            <div className="mt-4 flex justify-center space-x-4">
-              <button onClick={handleLogout} className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Yes, Logout</button>
-              <button onClick={() => setShowLogoutPopup(false)} className="bg-gray-300 text-neutral-900 px-4 py-2 rounded-lg hover:bg-gray-400">Cancel</button>
-            </div>
+      <Dialog open={showLogoutModal} onClose={() => setShowLogoutModal(false)} className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <DialogPanel className="bg-white p-6 rounded-lg shadow-lg text-center">
+          <DialogTitle className="text-lg font-medium text-neutral-900">Are you sure you want to logout?</DialogTitle>
+          <div className="mt-4 flex justify-center space-x-4">
+            <button onClick={handleLogout} className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Yes, Logout</button>
+            <button onClick={() => setShowLogoutModal(false)} className="bg-gray-300 text-neutral-900 px-4 py-2 rounded-lg hover:bg-gray-400">Cancel</button>
           </div>
-        </div>
-      )}
+        </DialogPanel>
+      </Dialog>
       {mobileNavOpen && (
         <div className="fixed top-0 left-0 bottom-0 w-5/6 max-w-xs z-50">
           <div className="fixed inset-0 bg-black opacity-20" onClick={() => setMobileNavOpen(false)}></div>
