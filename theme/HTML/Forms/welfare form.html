@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welfare Form</title>
+</head>
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: Arial, sans-serif; background-color: #f0f2f5;">
+
+    <div style="background-color: white; padding: 20px; border-radius: 8px; width: 100%; max-width: 500px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <h2 style="text-align: center; color: #333;">Welfare Form</h2>
+        
+        <form action="#" method="post" style="display: flex; flex-direction: column;">
+            <label for="name" style="margin-bottom: 5px; font-weight: bold; color: #555;">Full Name</label>
+            <input type="text" id="name" name="name" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; width: 100%;">
+
+            <label for="dob" style="margin-bottom: 5px; font-weight: bold; color: #555;">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; width: 100%;">
+
+            <label for="address" style="margin-bottom: 5px; font-weight: bold; color: #555;">Address</label>
+            <input type="text" id="address" name="address" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; width: 100%;">
+
+            <label for="phone" style="margin-bottom: 5px; font-weight: bold; color: #555;">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; width: 100%;">
+
+            <label for="email" style="margin-bottom: 5px; font-weight: bold; color: #555;">Email</label>
+            <input type="email" id="email" name="email" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; width: 100%;">
+
+            <label for="benefits" style="margin-bottom: 5px; font-weight: bold; color: #555;">Requested Benefits</label>
+            <select id="benefits" name="benefits" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; width: 100%;">
+                <option value="">Select Benefit Type</option>
+                <option value="financial-assistance">Financial Assistance</option>
+                <option value="healthcare">Healthcare Support</option>
+                <option value="food-support">Food Support</option>
+                <option value="housing-support">Housing Support</option>
+                <option value="education-support">Education Support</option>
+            </select>
+
+            <label for="comments" style="margin-bottom: 5px; font-weight: bold; color: #555;">Additional Comments</label>
+            <textarea id="comments" name="comments" rows="4" placeholder="Any additional information..." style="padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; width: 100%; resize: vertical;"></textarea>
+
+            <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">Submit Request</button>
+        </form>
+    </div>
+
+</body>
+</html>

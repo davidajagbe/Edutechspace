@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printing Request Form</title>
+    <link rel="stylesheet" href="/Public/styles/ScriptPrinting.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <form action="#" method="post">    
+            <h2 class="title">Printing Request Form</h2>
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="document-type">Document Type</label>
+            <select id="document-type" name="document-type" required>
+                <option value="">Select Document Type</option>
+                <option value="business-cards">Business Cards</option>
+                <option value="brochures">Brochures</option>
+                <option value="flyers">Flyers</option>
+                <option value="posters">Posters</option>
+                <option value="custom">Custom</option>
+            </select>
+
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" min="1" required>
+
+            <label for="paper-size">Paper Size</label>
+            <select id="paper-size" name="paper-size" required>
+                <option value="">Select Paper Size</option>
+                <option value="a4">A4</option>
+                <option value="a3">A3</option>
+                <option value="letter">Letter</option>
+                <option value="legal">Legal</option>
+            </select>
+
+            <label for="color">Color Option</label>
+            <select id="color" name="color" required>
+                <option value="">Select Color Option</option>
+                <option value="black-white">Black & White</option>
+                <option value="full-color">Full Color</option>
+            </select>
+
+            <label for="comments">Additional Comments</label>
+            <textarea id="comments" name="comments" rows="4" placeholder="Any additional instructions..."></textarea>
+
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>
+
+</body>
+</html>

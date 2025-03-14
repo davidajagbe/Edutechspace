@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camping Requirement Form - Stars of Nigeria Films Entertainment Ltd</title>
+
+    <!-- Link to Bootstrap CSS for styling and modal functionality -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/Public/styles/CampingForm.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="form-header">
+            <h1> <strong>STARS OF NIGERIA FILMS ENTERTAINMENT LTD</strong></h1>
+            <p>Tel: 08162550198, 07044635612, 09116218338</p>
+            <h2>Camping Requirement Form</h2>
+        </div>
+
+        <form action="/submit-camping-requirement" method="post" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+                <label for="artist-id">1. Artist Company Identification Card:</label>
+                <input type="file" id="artist-id" name="artist_id" class="form-control" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="welfare-payment">2. 2 copy of Welfare Payment Slip:</label>
+                <input type="file" id="welfare-payment" name="welfare_payment" class="form-control" required multiple>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="welfare-payment">2. copy of Welfare Payment Slip:</label>
+                <input type="file" id="welfare-payment" name="welfare_payment" class="form-control" required multiple>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="npremiere-slip">3. copy of Movie Premiere Payment Slip:</label>
+                <input type="file" id="premiere-slip" name="premiere_payment" class="form-control" required multiple>
+            </div>
+            <div class="form-group mb-3">
+                <label for="premiere-slip">3. copy of Movie Premiere Payment Slip:</label>
+                <input type="file" id="premiere-slip" name="premiere_payment" class="form-control" required multiple>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="aerobic-slip">4. copy of Aerobic Payment Slip:</label>
+                <input type="file" id="aerobic-slip" name="aerobic_payment" class="form-control" required multiple>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="aerobic-slip">4. copy of Aerobic Payment Slip:</label>
+                <input type="file" id="aerobic-slip" name="aerobic_payment" class="form-control" required multiple>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="lab-test">5. copy of Laboratory Test Results:</label>
+                <input type="file" id="lab-test" name="lab_test" class="form-control" required multiple>
+            </div>
+            <div class="form-group mb-3">
+                <label for="lab-test">5. copy of Laboratory Test Results:</label>
+                <input type="file" id="lab-test" name="lab_test" class="form-control" required multiple>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="national-id">6. copy of National Identification Card:</label>
+                <input type="file" id="national-id" name="national_id" class="form-control" required multiple>
+            </div>
+            <div class="form-group mb-3">
+                <label for="national-id">6. copy of National Identification Card:</label>
+                <input type="file" id="national-id" name="national_id" class="form-control" required multiple>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="utility-bill">7. copy of Utility Bill:</label>
+                <input type="file" id="utility-bill" name="utility_bill" class="form-control" required multiple>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="utility-bill">7. copy of Utility Bill:</label>
+                <input type="file" id="utility-bill" name="utility_bill" class="form-control" required multiple>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="tax-clearance">8. copy of Tax Clearance:</label>
+                <input type="file" id="tax-clearance" name="tax_clearance" class="form-control" required multiple>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="tax-clearance">8. copy of Tax Clearance:</label>
+                <input type="file" id="tax-clearance" name="tax_clearance" class="form-control" required multiple>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="camping-kit">9. Camping Kit Confirmation:</label>
+                <input type="text" id="camping-kit" name="camping_kit" class="form-control" placeholder="Specify contents of your camping kit" required>
+            </div>
+
+            <hr>
+            <div class="form-group mb-3">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#termsModal">
+                    Read Terms and Conditions
+                </button>
+            </div>
+
+            <div class="form-group form-check mb-3">
+                <input type="checkbox" id="agree" name="agree" class="form-check-input" required>
+                <label for="agree" class="form-check-label">I agree to the Terms and Conditions</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+
+        <!-- Terms and Conditions Modal -->
+        <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="termsModalLabel">Artist Camping Terms and Conditions</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="text-align: left;">
+                        <p>1. Artist dating any crew member or co-artist while camping, if caught you will be expelled without any benefit.</p>
+                        <p>2. No sexual act with any crew member or co-artist while camping; if caught you will be expelled without any benefit.</p>
+                        <p>3. No lesbianism practicing with crew member or co-artist while camping; if caught, you will face the law and be expelled without any benefit.</p>
+                        <p>4. No gay practicing with crew member or co-artist while camping; if caught, you will face the law and be expelled without any benefit.</p>
+                        <p>5. Stealing items or property from crew member or co-artist while camping; if caught, you will face 2 years suspension and legal action.</p>
+                        <p>6. Fighting or gossiping about any crew member or co-artist while camping; if caught, you will face 2 years suspension and legal action.</p>
+                        <p>7. Artists must bring their identification card to camp; failure to do so will result in denied entry.</p>
+                        <p>8. No artist should leave the camping venue for any reason; if caught, the artist will not be permitted to participate in filming.</p>
+                        <p>9. Required medical tests include pneumonia, tuberculosis, asthma, ulcer, AIDS/HIV, warts, monkey/chickenpox, and BP.</p>
+                        <p>10. Test results must be from a general hospital; private hospital results are not accepted.</p>
+                        <p>11. Artists without test results will be denied entry to camp.</p>
+                        <p>12. Artists who fail to disclose health challenges are at their own risk.</p>
+                        <p>13. Artists must wear company identification and vest while in camp.</p>
+                        <p>14. Artists without a welfare fee payment slip are not permitted in camp.</p>
+                        <p>15. Artists must bring membership payment slip, welfare payment slip, test results, identification card, premiere ticket slip, location kits, and script.</p>
+                        <p>16. Artists must arrive according to group schedules.</p>
+                        <p>17. For security, all calls should go through customer care while in camp.</p>
+                        <p>18. No visitors are allowed in camp.</p>
+                        <p>19. Artists must bring location kits to camp.</p>
+                        <p>20. Shooting hours are 5am - 5am.</p>
+                        <p>21. Meals are at 8am, 2pm, and 6pm.</p>
+                        <p>22. No capturing or posting movie scenes on social media; violators will face legal action for piracy.</p>
+                        <p>23. Artists who miss the location bus are at their own risk.</p>
+                        <p>24. A month of gym training is required before the location date.</p>
+                        <p>25. Artists should rehearse scripts with co-casted artists frequently.</p>
+                        <p>26. Artists unable to interpret scripts well will be replaced immediately.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS for modal functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

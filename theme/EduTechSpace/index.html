@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+    <title>RUNTechSpace</title>
+    <!-- Favicons -->
+    <link href="icon.png" rel="icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #111111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            width: 284px;
+            height: 284px;
+            margin-bottom: 2rem;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .loading-bar {
+            width: 100px;
+            height: 2px;
+            background: #222;
+            border-radius: 1px;
+            overflow: hidden;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .loading-bar::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            height: 100%;
+            width: 30%;
+            background: whitesmoke;
+            animation: loading 1s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes loading {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(400%);
+            }
+        }
+
+        .background-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #111111 70%);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Subtle gold glow effect behind logo */
+        .logo::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effect"></div>
+    <div class="container">
+        <div class="logo">
+            <!-- Replace the src with your actual logo path -->
+            <img src="logo2.png" alt="RUNTechSpace">
+        </div>
+        <div class="loading-bar"></div>
+    </div>
+
+    <script>
+        // Redirect after animation
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 3000);
+    </script>
+</body>
+</html>

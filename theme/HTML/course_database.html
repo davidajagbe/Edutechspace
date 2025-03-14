@@ -1,0 +1,110 @@
+
+<html lang="en">
+  <head>
+    <title>Free Course Database - RUNTechSpace</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/tailwind/tailwind.min.css"/>
+    <link href="icon.png" rel="icon">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer="defer"></script>
+  </head>
+  <body class="antialiased bg-body text-body font-body">
+    <div>
+      <section class="overflow-hidden" x-data="{ mobileNavOpen: false }">
+         
+        <nav class="px-10 py-7">
+          <div class="relative flex items-center justify-between"><a class="relative z-10 pr-4 xl:pr-0" href="#"><img class="h-10" src="logoii.png" alt=""/></a>
+            <div class="hidden xl:flex xl:justify-center gap-16 xl:absolute xl:w-full xl:top-1/2 xl:left-1/2 xl:transform xl:-translate-y-1/2 xl:-translate-x-1/2 removed"><a class="inline-block text-lg tracking-tight font-medium hover:text-opacity-80 transition duration-200" href="home.html">Home</a><a class="inline-block text-lg tracking-tight font-medium hover:text-opacity-80 transition duration-200" href="course.html">All Courses</a><a class="inline-block text-lg tracking-tight font-medium hover:text-opacity-80 transition duration-200" href="#">RTS Certification Exams</a></div>
+            <div class="relative hidden xl:flex items-center gap-2"><a class="inline-flex justify-center items-center text-center h-12 p-5 font-medium tracking-tight text-lg hover:text-white focus:text-white bg-transparent hover:bg-neutral-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" href="#">Contact us</a></div>
+            <button class="xl:hidden" x-on:click="mobileNavOpen = !mobileNavOpen">
+              <svg xmlns="http://www.w3.org/2000/svg" width="34" height="14" viewbox="0 0 34 14" fill="none">
+                <g clip-path="url(#clip0_231_4713)">
+                  <rect width="34" height="3" rx="1.5" fill="#19191B"></rect>
+                  <rect y="11" width="34" height="3" rx="1.5" fill="#19191B"></rect>
+                </g>
+                <defs>
+                  <clippath id="clip0_231_4713">
+                    <rect width="34" height="14" fill="white"></rect>
+                  </clippath>
+                </defs>
+              </svg>
+            </button>
+          </div>
+        </nav>
+        <div class="hidden fixed top-0 left-0 bottom-0 w-5/6 max-w-xs z-50" :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}">
+          <div class="fixed inset-0 bg-black opacity-20" x-on:click="mobileNavOpen = !mobileNavOpen"></div>
+          <nav class="relative p-8 w-full h-full bg-white overflow-y-auto">
+            <div class="flex flex-col justify-between h-full">
+              <div class="flex items-center justify-between"><a class="pr-4" href="#"><img class="h-10" src="logoii.png" alt=""/></a>
+                <button x-on:click="mobileNavOpen = !mobileNavOpen">
+                  <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 18L18 6M6 6L18 18" stroke="#252E4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="flex flex-col gap-8 py-16"><a class="inline-block max-w-max text-lg tracking-tight font-medium hover:text-opacity-80 transition duration-200" href="home.html">Home</a><a class="inline-block max-w-max text-lg tracking-tight font-medium hover:text-opacity-80 transition duration-200" href="course.html">All Courses</a><a class="inline-block max-w-max text-lg tracking-tight font-medium hover:text-opacity-80 transition duration-200" href="#">Certification Exams</a></div>
+              <div class="flex flex-col items-center gap-2"><a class="inline-flex justify-center items-center text-center w-full h-12 p-5 font-medium tracking-tight text-lg hover:text-white focus:text-white bg-transparent hover:bg-neutral-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" href="#">Contact us</a></div>
+            </div>
+          </nav>
+        </div>
+      </section>
+      
+      <section class="bg-neutral-50 py-10">
+        <div class="container mx-auto px-4">
+          <div class="bg-white rounded-3xl py-16 md:py-32 px-4 md:px-10">
+            <h1 class="text-6xl sm:text-9xl xl:text-11xl font-semibold mb-10 text-center max-w-sm md:max-w-lg lg:max-w-2xl xl:max-w-4xl mx-auto font-heading">Discover what interests you</h1>
+            <p class="text-xl md:text-2xl text-neutral-600 font-semibold text-center mb-16 md:mb-32 tracking-tight"></p>
+           
+            <div class="flex flex-wrap -m-5">
+              <div class="w-full md:w-1/2 lg:w-1/3 lg:mb-5 p-5"><img class="rounded-3xl mb-10 h-128 w-full object-cover" src="img/88615 (2).jpg" alt=""/>
+                <h6 class="text-4xl font-semibold mb-4 tracking-tight font-heading">Cybersecurity</h6>
+                <p class="text-neutral-600 text-xl font-medium mb-8 tracking-tight"></p><a class="inline-flex justify-center items-center text-center h-16 p-5 font-semibold tracking-tight text-xl hover:text-white focus:text-white bg-white hover:bg-neutral-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" href="#">Discover</a>
+              </div>
+              <div class="w-full md:w-1/2 lg:w-1/3 lg:mb-5 p-5"><img class="rounded-3xl mb-10 h-128 w-full object-cover" src="img/2151110144.jpg" alt=""/>
+                <h6 class="text-4xl font-semibold mb-4 tracking-tight font-heading">Machine Learning</h6>
+                <p class="text-neutral-600 text-xl font-medium mb-8 tracking-tight"></p><a class="inline-flex justify-center items-center text-center h-16 p-5 font-semibold tracking-tight text-xl hover:text-white focus:text-white bg-white hover:bg-neutral-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" href="#">Discover</a>
+              </div>
+              <div class="w-full md:w-1/2 lg:w-1/3 lg:mb-5 p-5"><img class="rounded-3xl mb-10 h-128 w-full object-cover" src="img/18707.jpg" alt=""/>
+                <h6 class="text-4xl font-semibold mb-4 tracking-tight font-heading">Frontend Development</h6>
+                <p class="text-neutral-600 text-xl font-medium mb-8 tracking-tight"></p><a class="inline-flex justify-center items-center text-center h-16 p-5 font-semibold tracking-tight text-xl hover:text-white focus:text-white bg-white hover:bg-neutral-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" href="#">Discover</a>
+              </div>
+              <div class="w-full md:w-1/2 lg:w-1/3 p-5"><img class="rounded-3xl mb-10 h-128 w-full object-cover" src="img/33556.jpg" alt=""/>
+                <h6 class="text-4xl font-semibold mb-4 tracking-tight font-heading">Backend Development</h6>
+                <p class="text-neutral-600 text-xl font-medium mb-8 tracking-tight"></p><a class="inline-flex justify-center items-center text-center h-16 p-5 font-semibold tracking-tight text-xl hover:text-white focus:text-white bg-white hover:bg-neutral-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" href="#">Discover</a>
+              </div>
+              <div class="w-full md:w-1/2 lg:w-1/3 p-5"><img class="rounded-3xl mb-10 h-128 w-full object-cover" src="img/51736.jpg" alt=""/>
+                <h6 class="text-4xl font-semibold mb-4 tracking-tight font-heading">Data Analysis</h6>
+                <p class="text-neutral-600 text-xl font-medium mb-8 tracking-tight"></p><a class="inline-flex justify-center items-center text-center h-16 p-5 font-semibold tracking-tight text-xl hover:text-white focus:text-white bg-white hover:bg-neutral-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" href="#">Discover</a>
+              </div>
+              <div class="w-full md:w-1/2 lg:w-1/3 p-5"><img class="rounded-3xl mb-10 h-128 w-full object-cover" src="img/2150165975.jpg" alt=""/>
+                <h6 class="text-4xl font-semibold mb-4 tracking-tight font-heading">Data Science</h6>
+                <p class="text-neutral-600 text-xl font-medium mb-8 tracking-tight"></p><a class="inline-flex justify-center items-center text-center h-16 p-5 font-semibold tracking-tight text-xl hover:text-white focus:text-white bg-white hover:bg-neutral-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" href="#">Discover</a>
+              </div>
+
+              <div class="w-full md:w-1/2 lg:w-1/3 p-5"><img class="rounded-3xl mb-10 h-128 w-full object-cover" src="img/2149930932.jpg" alt=""/>
+                <h6 class="text-4xl font-semibold mb-4 tracking-tight font-heading">UI/UX</h6>
+                <p class="text-neutral-600 text-xl font-medium mb-8 tracking-tight"></p><a class="inline-flex justify-center items-center text-center h-16 p-5 font-semibold tracking-tight text-xl hover:text-white focus:text-white bg-white hover:bg-neutral-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" href="#">Discover</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+
+        
+        <div class="bg-neutral-800 py-6">
+          <div class="container mx-auto px-4">
+            <div class="flex items-center gap-12 flex-wrap">
+              <p class="text-neutral-400 font-medium tracking-tight">© RUNTechSpace All rights reserved.</p>
+            </div>
+            <div class="flex items-center gap-12 flex-wrap">
+              <p class="text-neutral-400 font-medium tracking-tight"><a href="https://www.freepik.com/"></a> Images by Freepik</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .navlinks {
+      @apply relative text-lg tracking-tight text-blue-950 font-medium transition-all;
+    }
+  
+    .navlinks::after {
+      content: '';
+      @apply absolute left-0 -bottom-1 w-0 h-[2px] bg-neutral-950 transition-all duration-300;
+    }
+  
+    .navlinks:hover::after {
+      @apply w-full;
+    }
+}
+  

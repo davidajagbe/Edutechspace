@@ -1,0 +1,76 @@
+/* Center the login container */
+.form-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    background-color: #f5ffe9;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #4d6041;
+    margin-bottom: 1em;
+}
+
+label {
+    display: block;
+    font-size: 1rem;
+    color: #333;
+    margin-top: 1em;
+    text-align: left;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 0.8em;
+    margin-top: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.8em;
+    background-color: #4d6041;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1.5em;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #6b8061;
+}
+
+.form-footer {
+    margin-top: 1em;
+    font-size: 0.9rem;
+    color: #4d6041;
+}
+
+.form-footer a {
+    color: #91c083;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}

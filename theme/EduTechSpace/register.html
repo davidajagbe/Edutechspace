@@ -1,0 +1,225 @@
+
+<html lang="en">
+  <head>
+    <title>Register - Create an Account</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/tailwind/tailwind.min.css"/>
+    <link href="icon.png" rel="icon">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer="defer"></script>
+    <style>
+        /* Default positioning for mobile */
+        .eye-position {
+          right: 24px;
+        }
+        
+        /* Medium screens (tablets) */
+        @media (min-width: 768px) {
+          .eye-position {
+            right: 32px;
+          }
+        }
+        
+        /* Laptop screens */
+        @media (min-width: 1024px) {
+          .eye-position {
+            right: auto;
+            margin-left: 400px; /* Increased value for laptop view */
+          }
+        }
+        
+        /* Large desktop screens */
+        @media (min-width: 1280px) {
+          .eye-position {
+            margin-left: 480px; /* Even larger value for bigger screens */
+          }
+        }
+      </style>
+  </head>
+  <body class="antialiased bg-body text-body font-body">
+    <div>
+      <section class="overflow-hidden" x-data="{ mobileNavOpen: false }">
+         
+        <nav class="px-10 py-7">
+          <div class="relative flex items-center justify-between"><a class="relative z-10 pr-4 xl:pr-0" href="#"><img class="h-10" src="logoii.png" alt=""/></a>
+            <div class="hidden xl:flex xl:justify-center gap-16 xl:absolute xl:w-full xl:top-1/2 xl:left-1/2 xl:transform xl:-translate-y-1/2 xl:-translate-x-1/2 removed"></div>
+            <div class="relative hidden xl:flex items-center gap-2"><a class="inline-flex justify-center items-center text-center h-12 p-5 font-medium tracking-tight text-lg hover:text-white focus:text-white bg-transparent hover:bg-neutral-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" href="mailto:techspace@run.edu.ng">Contact us</a></div>
+            <button class="xl:hidden" x-on:click="mobileNavOpen = !mobileNavOpen">
+              <svg xmlns="http://www.w3.org/2000/svg" width="34" height="14" viewbox="0 0 34 14" fill="none">
+                <g clip-path="url(#clip0_231_4713)">
+                  <rect width="34" height="3" rx="1.5" fill="#19191B"></rect>
+                  <rect y="11" width="34" height="3" rx="1.5" fill="#19191B"></rect>
+                </g>
+                <defs>
+                  <clippath id="clip0_231_4713">
+                    <rect width="34" height="14" fill="white"></rect>
+                  </clippath>
+                </defs>
+              </svg>
+            </button>
+          </div>
+        </nav>
+        <div class="hidden fixed top-0 left-0 bottom-0 w-5/6 max-w-xs z-50" :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}">
+          <div class="fixed inset-0 bg-black opacity-20" x-on:click="mobileNavOpen = !mobileNavOpen"></div>
+          <nav class="relative p-8 w-full h-full bg-white overflow-y-auto">
+            <div class="flex flex-col justify-between h-full">
+              <div class="flex items-center justify-between"><a class="pr-4" href="#"><img class="h-10" src="logoii.png" alt=""/></a>
+                <button x-on:click="mobileNavOpen = !mobileNavOpen">
+                  <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 18L18 6M6 6L18 18" stroke="#252E4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="flex flex-col gap-8 py-16"></div>
+              <div class="flex flex-col items-center gap-2"><a class="inline-flex justify-center items-center text-center w-full h-12 p-5 font-medium tracking-tight text-lg hover:text-white focus:text-white bg-transparent hover:bg-neutral-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" href="mailto:techspace@run.edu.ng">Contact us</a></div>
+            </div>
+          </nav>
+        </div>
+      </section>
+      
+     
+      <section class="bg-neutral-50 py-12 md:py-24">
+        <div class="container mx-auto px-4">
+          <div class="bg-white rounded-3xl overflow-hidden">
+            <div class="flex flex-wrap">
+              <div class="w-full xl:w-1/2">
+                <div style="height: 710px;"><img class="h-full w-full object-cover" src="img/login1.JPG" alt=""/></div>
+              </div>
+              <div class="w-full xl:w-1/2">
+                <div class="px-8 md:px-16 pt-16 pb-20">
+                    
+                    <form action="login.html">
+                        <span class="inline-block text-neutral-600 text-xl font-semibold tracking-tight mb-4">Account</span>
+                        <h1 class="text-6xl font-semibold tracking-tight mb-6 font-heading">New Here? 😀</h1>
+                        <p class="text-neutral-600 font-medium tracking-tight mb-16">Create an Account</p>
+                        
+                        <a class="flex justify-center items-center text-center w-full mb-6 p-4 font-semibold tracking-tight hover:text-white border border-neutral-900 bg-white hover:bg-neutral-900 focus:bg-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" href="#">
+                          <img class="mr-6 h-8" src="img/google.svg" alt="Google logo"/>
+                          <span>Continue with Google</span>
+                        </a>
+                        
+                        <p class="text-center text-neutral-600 font-medium mb-4">OR</p>
+                        
+                        <label class="block mb-3 text-neutral-600 font-medium tracking-tight" for="email">Full Name</label>
+                        <div class="flex flex-wrap -m-3 mb-3">
+                          <div class="w-full p-3">
+                            <input class="w-full px-8 py-5 outline-none rounded-lg border border-neutral-100 placeholder-neutral-300 font-medium focus:ring-4 focus:ring-neutral-100 transition duration-200" 
+                              id="fullname" 
+                              name="fullname"
+                              required 
+                              type="text" 
+                              placeholder="Enter your Full Name"
+                              aria-label="fullname"/>
+                          </div>
+                        </div>
+
+                        <label class="block mb-3 text-neutral-600 font-medium tracking-tight" for="email">Username</label>
+                        <div class="flex flex-wrap -m-3 mb-3">
+                          <div class="w-full p-3">
+                            <input class="w-full px-8 py-5 outline-none rounded-lg border border-neutral-100 placeholder-neutral-300 font-medium focus:ring-4 focus:ring-neutral-100 transition duration-200" 
+                              id="username" 
+                              name="username"
+                              required 
+                              type="text" 
+                              placeholder="Enter your Username"
+                              aria-label="Username"/>
+                          </div>
+                        </div>
+
+                        <label class="block mb-3 text-neutral-600 font-medium tracking-tight" for="email">Your Email</label>
+                        <div class="flex flex-wrap -m-3 mb-3">
+                          <div class="w-full p-3">
+                            <input class="w-full px-8 py-5 outline-none rounded-lg border border-neutral-100 placeholder-neutral-300 font-medium focus:ring-4 focus:ring-neutral-100 transition duration-200" 
+                              id="email" 
+                              name="email"
+                              required 
+                              type="email" 
+                              placeholder="Enter your Email"
+                              aria-label="Email address"/>
+                          </div>
+                        </div>
+                        
+                        <label class="block mb-3 text-neutral-600 font-medium tracking-tight" for="password">Your Password</label>
+                        <div class="flex flex-wrap -m-3 mb-3">
+                          <div class="w-full p-3 relative">
+                            <button type="button" 
+                            id="togglePassword" 
+                            class="absolute top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-600 focus:outline-none eye-position"
+                            aria-label="Toggle password visibility">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                          </button>
+                            <input class="w-full px-8 py-5 outline-none rounded-lg border border-neutral-100 placeholder-neutral-300 font-medium focus:ring-4 focus:ring-neutral-100 transition duration-200" 
+                              
+                            id="password" 
+                              name="password"
+                              required 
+                              type="password" 
+                              placeholder="Enter your Password"
+                              aria-label="Password"/>
+                           
+                          </div>
+                          
+                         
+                          
+                          <div class="w-full p-3">
+                            <button class="flex justify-center items-center text-center h-full w-full p-5 font-semibold tracking-tight text-lg text-white bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" 
+                              type="submit">
+                              Sign Up
+                            </button>
+                          </div>
+                        </div>
+                        
+                        <div class="text-center">
+                          <a class="inline-block text-neutral-600 text-sm font-medium hover:text-neutral-800 tracking-tight transition duration-200" href="login.html">Already have an account? Login</a>
+                        </div>
+                      </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+        
+        <div class="bg-neutral-800 py-6">
+          <div class="container mx-auto px-4">
+            <div class="flex items-center gap-12 flex-wrap">
+              <p class="text-neutral-400 font-medium tracking-tight">© RUNTechSpace All rights reserved.</p>
+            </div>
+            <div class="flex items-center gap-12 flex-wrap">
+              <p class="text-neutral-400 font-medium tracking-tight"><a href="https://www.freepik.com/"></a> Images by Freepik</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const passwordInput = document.getElementById('password');
+      const icon = this.querySelector('svg');
+      
+      // Toggle the password visibility
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        // Change to "hide" icon
+        icon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+        `;
+      } else {
+        passwordInput.type = 'password';
+        // Change back to "show" icon
+        icon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        `;
+      }
+    });
+  </script>
+</html>
