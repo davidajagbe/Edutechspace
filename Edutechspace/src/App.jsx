@@ -6,6 +6,7 @@ import Signup from './pages/signup';
 import Course from './pages/Course';
 import CourseDatabase from './pages/courseDatabase';
 import Contact from './pages/contact';
+import Profile from './pages/Profile';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -15,6 +16,7 @@ const App = () => {
         <Route path='/login' element={<Login/>}/>
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/course' element={<Course/>}/>
+        <Route path='/profile' element={<Profile/>}/>
         <Route path='/coursedatabase' element={<CourseDatabase/>}/>
         <Route path='/contact' element={<Contact/>}/>
       </Route>
