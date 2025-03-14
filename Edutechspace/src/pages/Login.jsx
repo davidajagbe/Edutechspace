@@ -1,9 +1,10 @@
 // Login.jsx
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useGoogleLogin } from '@react-oauth/google';
 import Cookies from 'js-cookie';
 
 const Login = () => {
+  const navigate = useNavigate();
   const loginauth = useGoogleLogin({
     onSuccess: tokenResponse => {
       // Fetch user info using the access token
@@ -19,6 +20,7 @@ const Login = () => {
           localStorage.setItem('user', JSON.stringify(data));
         })
         .catch(err => console.error("Failed to fetch user info:", err));
+        navigate('/course')
     },
     onError: errorResponse => console.log('Login Failed:', errorResponse),
   });

@@ -1,10 +1,11 @@
 // Signup.jsx
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { GoogleLogin } from '@react-oauth/google';
 import {jwtDecode} from 'jwt-decode';
 import Cookies from 'js-cookie';
 
 const Signup = () => {
+  const navigate = useNavigate();
   const onSuccess = credentialResponse => {
     // Decode the JWT credential to get user info
     const decoded = jwtDecode(credentialResponse.credential);
@@ -13,6 +14,7 @@ const Signup = () => {
     Cookies.set('token', credentialResponse.credential, { expires: 1 });
     // Optionally, save user data locally
     localStorage.setItem('user', JSON.stringify(decoded));
+    navigate('/course')
   };
   const onError = () => {
     console.log('Signup Failed!');
