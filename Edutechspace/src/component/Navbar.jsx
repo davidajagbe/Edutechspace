@@ -56,7 +56,7 @@ const Navbar = () => {
           </div>
           {isLoggedIn && (
             <div className="flex items-center space-x-4">
-              <NavLink className="text-lg font-medium text-blue-950" to="/profile">{userName}</NavLink>
+              <NavLink className="text-lg font-medium text-blue-950 navlinks cursor-pointer" to="/profile">{userName}</NavLink>
               <button 
                 className="bg-slate-200 text-blue-950 px-4 py-2 rounded-lg text-lg font-medium hover:bg-blue-950 hover:text-white transition-all"
                 onClick={() => setShowLogoutModal(true)}
