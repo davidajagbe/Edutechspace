@@ -51,7 +51,7 @@ const Navbar = () => {
           <div className="hidden xl:flex xl:justify-center gap-16 xl:absolute xl:w-full xl:top-1/2 xl:left-1/2 xl:transform xl:-translate-y-1/2 xl:-translate-x-1/2">
             <NavLink className="navlinks" to="/">Home</NavLink>
             <NavLink className="navlinks" to="/course">All Courses</NavLink>
-            <NavLink className="navlinks" to="/">RTS Certification Exams</NavLink>
+            <NavLink className="navlinks" to="/certification-exam">RTS Certification Exams</NavLink>
             <NavLink className="navlinks" to="/contact">Contact us</NavLink>
           </div>
           {isLoggedIn && (
@@ -97,7 +97,7 @@ const Navbar = () => {
               <div className="flex flex-col gap-8 py-16">
                 <NavLink className="max-w-max navlinks" to="/">Home</NavLink>
                 <NavLink className="max-w-max navlinks" to="/course">All Courses</NavLink>
-                <NavLink className="max-w-max navlinks" to="/exams">Certification Exams</NavLink>
+                <NavLink className="max-w-max navlinks" to="/certification-exam">Certification Exams</NavLink>
                 <NavLink 
                 className="max-w-max navlinks" 
                 onClick={handleLogout}

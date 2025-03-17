@@ -7,6 +7,8 @@ import Course from './pages/Course';
 import CourseDatabase from './pages/courseDatabase';
 import Contact from './pages/contact';
 import Profile from './pages/Profile';
+import NotFound from './component/NotFoundPage';
+import CertificateExam from './pages/CertificationExam';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -19,6 +21,8 @@ const App = () => {
         <Route path='/profile' element={<Profile/>}/>
         <Route path='/coursedatabase' element={<CourseDatabase/>}/>
         <Route path='/contact' element={<Contact/>}/>
+        <Route path='/certification-exam' element={<CertificateExam/>}/>
+        <Route path='*' element={<NotFound/>}/>
       </Route>
     )
   )
