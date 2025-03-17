@@ -1,4 +1,4 @@
-import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import MainLayout from './layout/MainLayout';
 import LoadingPage from './pages/LoadingPage';
@@ -18,15 +18,15 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // Show loading screen for 3 seconds
+    }, 3000); // Ensure the loading screen stays for 3 seconds
   }, []);
 
   if (isLoading) {
     return <LoadingPage />;
   }
 
-  const router = createBrowserRouter(
-    createRoutesFromElements(
+  return (
+    <Routes>
       <Route path='/' element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path='/login' element={<Login />} />
@@ -38,10 +38,8 @@ const App = () => {
         <Route path='/certification-exam' element={<CertificateExam />} />
         <Route path='*' element={<NotFound />} />
       </Route>
-    )
+    </Routes>
   );
-
-  return <RouterProvider router={router} />;
 };
 
 export default App;

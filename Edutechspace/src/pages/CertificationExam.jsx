@@ -20,12 +20,12 @@ const CertificateExam = () => {
           <div className="flex flex-wrap -m-5">
             {examData.map((exam, index) => (
               <div key={index} className="w-full md:w-1/2 lg:w-1/3 p-5">
-                <img className="rounded-3xl mb-10 h-128 w-full object-cover" src={exam.image} alt={exam.title} />
-                <h6 className="text-4xl font-semibold mb-4 tracking-tight font-heading">
+                <img className="rounded-3xl mb-10 h-96 w-full object-cover" src={exam.image} alt={exam.title} />
+                <h6 className="text-4xl font-semibold mb-4 tracking-tight font-heading bg-slate-900">
                   {exam.title}
                 </h6>
                 <Link
-                  className="inline-flex justify-center items-center text-center h-16 p-5 font-semibold tracking-tight text-xl hover:text-white focus:text-white bg-white hover:bg-neutral-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200"
+                  className="inline-flex justify-center items-center text-center h-16 p-5 font-semibold tracking-tight text-xl hover:text-white focus:text-white bg-white hover:bg-slate-900 focus:bg-neutral-900 border border-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200"
                   to={exam.link}
                 >
                   Register
