@@ -13,6 +13,7 @@ const Course = () => {
             <h2 className="text-4xl font-medium tracking-tight font-heading text-blue-950">
               RUNTECHSPACE Courses
             </h2>
+            <p className='text-slate-900 text-lg'>Looking to start something new?</p>
           </div>
           <div className="w-full lg:w-1/2 p-4 flex items-center justify-end flex-wrap gap-12">
             <h3 class="text-blue-950 text-xl font-semibold tracking-tight font-heading">Our Training Programs</h3>
@@ -30,6 +31,7 @@ const Course = () => {
             <h2 className="text-4xl font-medium tracking-tight font-heading text-blue-950">
               Free Course Database
             </h2>
+            <p className='text-slate-900 text-lg'>Browse through our various free courses with certificates globally.</p>
           </div>
           <div className="w-full lg:w-1/2 p-4 flex items-center justify-end flex-wrap gap-12">
             <h2 class="text-slate-600 text-xl font-semibold tracking-tight font-heading">Global Database of Free Courses with Certificates</h2>

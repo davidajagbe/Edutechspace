@@ -4,7 +4,7 @@
 
 @layer components {
     .navlinks {
-      @apply relative text-lg tracking-tight text-blue-950 font-medium transition-all;
+      @apply relative text-lg tracking-tight text-slate-900 font-medium transition-all;
     }
   
     .navlinks::after {
