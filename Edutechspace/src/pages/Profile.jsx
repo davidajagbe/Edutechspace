@@ -113,7 +113,7 @@ const Profile = () => {
           <p className='text-slate-700 text-lg mb-2'>Test your knowledge with a quick quiz and unlock your spot in our exclusive Runtech community!</p>
           <button
             onClick={() => setShowQuizModal(true)}
-            className="bg-blue-950 text-white px-10 py-5 rounded-xl text-2xl hover:bg-blue-800 transition"
+            className="bg-blue-950 text-white px-3 py-3 rounded-xl text-lg hover:bg-blue-800 transition"
           >
             Attempt Quiz to Join Runtech Space
           </button>
