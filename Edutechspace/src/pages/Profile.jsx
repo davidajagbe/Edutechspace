@@ -26,9 +26,9 @@ const Profile = () => {
   return (
     <section className="flex flex-col items-center justify-center min-h-screen bg-neutral-100 p-6">
       <div className="max-w-2xl w-full bg-white shadow-lg rounded-2xl p-6">
-        <header className="flex justify-between items-center border-b pb-4 mb-6">
+        <header className="flex justify-between items-center border-b pb-4 mb-6 gap-2">
           <h1 className="text-2xl font-bold text-neutral-900">{name || "John Doe"} Dashboard</h1>
-          <Link to="/editprofile" className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-blue-950 transition">
+          <Link to="/editprofile" className="bg-slate-900 text-white p-2.5 text-[11px] md:text-lg rounded-lg hover:bg-blue-950 transition">
             Edit Profile
           </Link>
         </header>
@@ -47,8 +47,8 @@ const Profile = () => {
               <div>
                 <h3 className="text-lg font-medium text-neutral-900">Introduction to CyberSecurity - 01</h3>
                 <p className="text-sm text-neutral-700">Cyber Laws and Measures 
-                <span className="ml-3 px-3 py-1 text-md font-semibold text-white bg-slate-600 rounded-full relative group" aria-label="work through the course material at your own speed">
-                  Self Paced Mode
+                <span className="ml-3 px-3 py-1 md:text-md text-[5px] font-semibold text-white bg-slate-600 rounded-full relative group" aria-label="work through the course material at your own speed">
+                  Self Paced
                   {/* Tooltip */}
                   <span
                     role="tooltip"
@@ -61,7 +61,7 @@ const Profile = () => {
                 </p>
               </div>
             </div>
-            <Link to="/course" className="bg-blue-950 text-white px-4 py-2 rounded-lg hover:bg-slate-900 transition">
+            <Link to="/course" className="bg-blue-950 text-white p-3 text-sm md:text-lg rounded-lg hover:bg-slate-900 transition">
               Begin Learning
             </Link>
           </div>

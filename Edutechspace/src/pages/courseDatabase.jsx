@@ -18,7 +18,7 @@ const courses = [
     title: 'Frontend Development',
     description: 'Master front-end technologies and frameworks like Web5,React.',
     image: frontendImage,
-    link: '/course/frontend',
+    link: '/course/frontendcourse',
   },
   {
     title: 'Cybersecurity',

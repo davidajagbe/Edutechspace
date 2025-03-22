@@ -11,6 +11,7 @@ import Contact from './pages/contact';
 import Profile from './pages/Profile';
 import NotFound from './component/NotFoundPage';
 import CertificateExam from './pages/CertificationExam';
+import FrontendDevStack from './stacks/FrontendDevStack';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,6 +35,7 @@ const App = () => {
         <Route path='/course' element={<Course />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/coursedatabase' element={<CourseDatabase />} />
+        <Route path='/course/frontendcourse' element={<FrontendDevStack />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/certification-exam' element={<CertificateExam />} />
