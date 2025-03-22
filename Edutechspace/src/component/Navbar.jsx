@@ -53,7 +53,7 @@ const Navbar = () => {
                   {userName}
                 </NavLink>
                 <button
-                  className="bg-slate-200 text-blue-950 px-4 py-2 rounded-lg text-lg font-medium hover:bg-blue-950 hover:text-white transition-all hidden md:block"
+                  className="bg-slate-200 text-blue-950 px-4 py-2 rounded-lg text-lg font-medium hover:bg-blue-950 hover:text-white transition-all hidden md:block md:ml-auto"
                   onClick={() => setShowLogoutModal(true)}
                 >
                   Logout
