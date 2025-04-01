@@ -1,4 +1,3 @@
-
 const Footer = () => {
   return (
     <footer className="bg-neutral-900 text-white py-6 mt-10">

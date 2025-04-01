@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import learningPathImg from '../assets/learning-path.png';
-import QuizModal from '../component/QuizModal';
+import learningPathImg from '../assets/images/learning-path.png';
+import QuizModal from '../component/dialog/QuizModal';
 
 const Profile = () => {
   const [name, setName] = useState('');

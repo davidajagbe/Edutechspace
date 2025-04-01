@@ -1,0 +1,155 @@
+import React, { useState, useEffect } from 'react';
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
+import backendVideo from "/Users/DELL/Downloads/Edutechspace/Edutechspace/src/assets/videos/jsxvideo.mp4"; 
+
+const videoData = [
+  {
+    id: 1,
+    title: "Introduction to Backend Development",
+    src: backendVideo,
+    requirement: "No prior backend knowledge required.",
+    description: "An overview of what backend development is, core responsibilities, technologies used, and how it differs from frontend development."
+  },
+  {
+    id: 2,
+    title: "Server, Client & APIs",
+    src: backendVideo,
+    requirement: "Basic web knowledge (HTML/CSS) recommended.",
+    description: "Understand how servers, clients, and APIs interact in a client-server architecture. Learn about REST and how backend communicates with frontend."
+  },
+  {
+    id: 3,
+    title: "Databases & Data Modeling",
+    src: backendVideo,
+    requirement: "Familiarity with CRUD operations helpful.",
+    description: "Learn about relational (SQL) and non-relational (NoSQL) databases, how to model data, and interact with them in backend applications."
+  },
+  {
+    id: 4,
+    title: "Authentication & Authorization",
+    src: backendVideo,
+    requirement: "Understand user sessions or cookies (basics).",
+    description: "Covers secure login systems, JWTs, OAuth, and role-based access control to protect backend routes and data."
+  },
+  {
+    id: 5,
+    title: "Building RESTful APIs with Node.js",
+    src: backendVideo,
+    requirement: "Basic JavaScript required.",
+    description: "Hands-on demo of creating a RESTful API using Express.js and Node.js. Learn routing, middleware, and request handling."
+  },
+  {
+    id: 6,
+    title: "Error Handling & Logging",
+    src: backendVideo,
+    requirement: "Knowledge of basic Express.js flow helpful.",
+    description: "Learn how to handle server errors gracefully and implement logging tools to monitor your backend app."
+  },
+  {
+    id: 7,
+    title: "Deployment & Environment Management",
+    src: backendVideo,
+    requirement: "Completion of earlier lessons recommended.",
+    description: "Learn how to deploy your backend apps using platforms like Heroku, Vercel, or Railway. Manage `.env` variables securely."
+  },
+  {
+    id: 8,
+    title: "Backend Career Paths & Tools",
+    src: backendVideo,
+    requirement: "At least 5 prior videos completed.",
+    description: "Explore backend roles, popular tools (Postman, Docker, MongoDB Compass), and backend-related career roadmaps."
+  }
+];
+
+const pdfData = [
+  {
+    id: 1,
+    title: "Backend Developer Roadmap (PDF)",
+    src: "https://roadmap.sh/backend"
+  },
+  {
+    id: 2,
+    title: "REST API Design Best Practices (PDF)",
+    src: "https://www.restapitutorial.com/downloads/rest_api_tutorial.pdf"
+  }
+];
+
+const BackendVideoPdfModal = ({ type, onClose }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const isVideo = type === 'video';
+  const data = isVideo ? videoData : pdfData;
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'Escape') onClose();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex]);
+
+  useEffect(() => {
+    const savedIndex = localStorage.getItem(`current-${type}-index`);
+    if (savedIndex) setCurrentIndex(parseInt(savedIndex));
+  }, [type]);
+
+  useEffect(() => {
+    localStorage.setItem(`current-${type}-index`, currentIndex);
+  }, [currentIndex, type]);
+
+  const next = () => {
+    if (currentIndex < data.length - 1) setCurrentIndex(currentIndex + 1);
+  };
+  const prev = () => {
+    if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+  };
+
+  return (
+    <Dialog open={true} onClose={onClose} className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 p-4">
+      <DialogPanel className="bg-white p-6 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-xl">
+        <DialogTitle className="text-xl sm:text-2xl font-bold mb-4 text-center">{data[currentIndex].title}</DialogTitle>
+        <div className="flex justify-between items-center flex-wrap gap-4">
+          <button onClick={prev} disabled={currentIndex === 0} className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50">Previous</button>
+          <span className="text-sm sm:text-base">{currentIndex + 1} / {data.length}</span>
+          <button onClick={next} disabled={currentIndex === data.length - 1} className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50">Next</button>
+        </div>
+
+        {isVideo ? (
+          <video controls className="w-full h-[200px] sm:h-[350px] md:h-[450px] lg:h-[500px] rounded mb-4" src={data[currentIndex].src}></video>
+        ) : (
+          <iframe
+            title={data[currentIndex].title}
+            src={data[currentIndex].src}
+            className="w-full h-[400px] sm:h-[500px] rounded mb-4"
+          ></iframe>
+        )}
+
+        <div className="flex justify-center gap-2 my-4">
+          {data.map((_, idx) => (
+            <span
+              onClick={() => setCurrentIndex(idx)}
+              key={idx}
+              className={`h-2 w-2 rounded-full cursor-pointer transition-all duration-300 ${idx === currentIndex ? 'bg-blue-900 scale-125' : 'bg-gray-300'}`}
+            />
+          ))}
+        </div>
+
+        {isVideo && (
+          <div className="bg-gray-100 p-4 rounded-md mb-4">
+            <h3 className="text-lg font-semibold mb-2">Requirement</h3>
+            <p className="text-sm text-gray-700 mb-3">{data[currentIndex].requirement}</p>
+
+            <h3 className="text-lg font-semibold mb-2">Description</h3>
+            <p className="text-sm text-gray-700">{data[currentIndex].description}</p>
+          </div>
+        )}
+
+        <button onClick={onClose} className="mt-6 w-full bg-blue-950 text-white py-3 rounded-lg text-lg hover:bg-blue-800 transition">Close</button>
+      </DialogPanel>
+    </Dialog>
+  );
+};
+
+export default BackendVideoPdfModal;

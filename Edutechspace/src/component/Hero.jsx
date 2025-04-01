@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import edu1 from '../assets/edu1.jpg';
-import edu2 from '../assets/edu2.jpg';
+import edu1 from '../assets/images/edu1.jpg';
+import edu2 from '../assets/images/edu2.jpg';
 
 const Hero = () => {
   return (

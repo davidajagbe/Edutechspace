@@ -1,77 +1,63 @@
-// FrontendCourse.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { UserIcon, StarIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { InfinityIcon,BarChart3 } from 'lucide-react';
-import frontendHeaderImg from '../assets/images/frontendHeaderImage2.jpg';
-import htmlImg from '../assets/images/html-image.jpg';
-import cssImg from '../assets/images/css-image.jpg';
-import jsImg from '../assets/images/js-thumbnail.jpg';
-import htmlGuide from '../assets/images/html-guide.jpg';
-import cssGuide from '../assets/images/css-guide.png';
-import FrontendVideoPdfModal from '../component/dialog/FrontendVideoPdfModal';
+import AIHeaderImg from '../assets/images/mlimage (1).jpg';
+import videoimg1 from '../assets/images/aiImagee.jpg';
+import videoimg2 from '../assets/images/2150165975.jpg';
+import videoimg3 from '../assets/images/mlimage (2).jpg';
+import pdfimg from '../assets/images/aiImage.jpg';
+import AiVideoPdfModal from '../component/dialog/AiVideoPdfModal';
 
 // The sections for scroll tracking
 const sections = [
   { id: 'overview', title: '📘 Overview' },
   { id: 'benefits', title: '🚀 Key Benefits' },
-  { id: 'learn', title: '🧠 What You Will Learn' },
+  { id: 'learn', title: '🎓 What You Will Learn' },
   { id: 'requirements', title: '🧰 What You Will Need' },
   { id: 'pdf', title: '🧾 PDF Resources' },
   { id: 'videos', title: '🎥 Video Resources' },
   { id: 'recommendation', title: 'Course Recommendation' },
 ];
 
-const FrontendCourse = () => {
+const AiStack = () => {
   const [activeSection, setActiveSection] = useState(null);
   const [modalType, setModalType] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const sizes = ['w-5 h-5', 'w-6 h-6', 'w-7 h-7', 'w-8 h-8'];
 
   // Dummy data
   const videoResources = [
     {
       id: 1,
-      title: 'Getting Started With HTML',
-      description: 'Learn the basics of HTML and how to build your first webpage.',
+      title: 'An introduction to the concepts and scope of Artificial Intelligence.',
+      description: 'An introduction to the concepts and scope of Artificial Intelligence.',
       duration: '10:25',
-      image: htmlImg,
+      image: videoimg1,
     },
     {
       id: 2,
-      title: 'Introduction to CSS',
-      description: 'Understand how to style your webpages using CSS.',
+      title: 'Machine Learning vs AI',
+      description: 'Understand how Machine Learning fits into the broader AI landscape.',
       duration: '12:30',
-      image: cssImg,
+      image: videoimg2,
     },
     {
       id: 3,
-      title: 'JavaScript Basics',
-      description: 'Dive into JavaScript and learn how to make your site interactive.',
+      title: 'AI Applications in Real Life',
+      description: 'Explore real-world use cases of AI across industries.',
       duration: '15:00',
-      image: jsImg,
+      image: videoimg3,
     },
-    {
-      id: 4,
-      title: 'Intro to React Basics',
-      description: 'Dive into JavaScript framework, react and learn how to make interactive web applications!',
-      duration: '23:00',
-      image: jsImg,
-    }
   ];
 
   const pdfResources = [
     {
       id: 1,
-      title: 'HTML Beginner Guide',
-      description: 'A complete walkthrough on HTML fundamentals.',
-      image: htmlGuide,
-    },
-    {
-      id: 2,
-      title: 'CSS Design Basics',
-      description: 'Understand CSS layout, colors, and visual hierarchy.',
-      image: cssGuide,
+      title: 'AI Overview PDF',
+      description: 'A complete walkthrough on AI fundamentals.',
+      image: pdfimg,
     },
   ];
 
@@ -144,16 +130,16 @@ const FrontendCourse = () => {
           {/* Header Section */}
           <div className="relative w-full h-[500px] overflow-hidden pb-32">
             <img
-              src={frontendHeaderImg}
-              alt="Frontend Development Hero"
+              src={AIHeaderImg}
+              alt="ai Hero"
               className="w-full h-full object-cover rounded-md"
             />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 mt-[-135px]">
-              <h1 className="text-6xl md:text-7xl md:font-extrabold font-bold text-white mb-2">
-                Frontend Development
+              <h1 className="text-6xl md:text-7xl md:font-extrabold font-bold text-slate-900 mb-2">
+              Artificial Intelligence
               </h1>
-              <p className="text-lg md:text-2xl text-white font-semibold max-w-2xl">
-                Master the Art of Building Beautiful, Responsive Websites with HTML, CSS, and JavaScript.
+              <p className="text-lg md:text-2xl text-slate-900 max-w-2xl">
+                Explore the fascinating world of AI, from intelligent agents to neural networks, and build future-ready systems.
               </p>
             </div>
             {/* Horizontal Badge/Tag Section */}
@@ -181,14 +167,14 @@ const FrontendCourse = () => {
               <div>
                 <div className="flex items-center gap-2">
                   <p className="text-md md:text-xl font-semibold text-blue-950">Beginner Level</p>
-                  <BarChart3 className="w-6 h-6 text-blue-950" />
+                  <BarChart3 className="w-5 h-5 text-blue-950" />
                 </div>
                 <p className="text-sm text-slate-600">Expected Proficiency</p>
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <p className="text-md md:text-xl font-semibold text-blue-950">Flexible Schedule</p>
-                  <InfinityIcon className="w-6 h-6 text-blue-950" />
+                  <InfinityIcon className="w-5 h-5 text-blue-950" />
                 </div>
                 <p className="text-sm text-slate-600">Self Paced</p>
               </div>
@@ -203,8 +189,8 @@ const FrontendCourse = () => {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                {[1, 2, 3, 4].map(i => (
-                  <UserIcon key={i} className={`w-${i === 3 ? 8 : i + 4} h-${i === 3 ? 8 : i + 4} text-blue-950`} />
+                {sizes.map((size, i) => (
+                  <UserIcon key={i} className={`${size} text-blue-950`} />
                 ))}
                 </div>
                 <p className="text-md md:text-lg font-semibold text-blue-950">200 Students Applied</p>
@@ -216,8 +202,9 @@ const FrontendCourse = () => {
           <div className="mb-12" id='overview'>
             <h2 className="text-3xl font-bold text-blue-950 mb-4">Course Overview</h2>
             <p className="text-xl text-neutral-800 leading-relaxed">
-            Learn the fundamentals of frontend web development and build stunning, responsive websites using HTML, CSS, and JavaScript. 
-            This course takes you from beginner to advanced level with hands-on projects and real-world examples.
+                This course provides a deep dive into Artificial Intelligence concepts such as intelligent systems, 
+                machine learning, neural networks, NLP, and more. 
+                Whether you're a beginner or looking to expand your skill set, this course is for you.
             </p>
           </div>
 
@@ -226,12 +213,10 @@ const FrontendCourse = () => {
             <h2 className="text-3xl font-bold text-blue-950 mb-4">Key Benefits</h2>
             <ul className="space-y-2 text-xl text-neutral-800 pl-6">
                 {[
-                "Build real-world responsive websites",
-                "Learn the latest industry-standard tools",
-                "Self-paced learning with access to resources anytime",
-                "Project-based learning approach for practical skills",
-                "Boost your resume with hands-on experience",
-                "Access to mentorship and support community"
+                "Understand how AI is transforming industries",
+                "Hands-on projects and applications",
+                "Learn to build simple AI models",
+                "Prepare for roles like AI Engineer or ML Developer",
                 ].map((benefit, idx) => (
                 <li key={idx} className="flex items-center">
                   <CheckIcon className="w-6 h-6 text-slate-500 mr-2" />
@@ -246,13 +231,11 @@ const FrontendCourse = () => {
             <h2 className="text-3xl font-bold text-blue-950 mb-4">What you will learn</h2>
             <ul className="space-y-2 text-xl text-neutral-800 pl-6">
                 {[
-                "You'll master HTML5",
-                "CSS3",
-                "JavaScript",
-                "Fundamentals",
-                "Responsive design",
-                "Modern frameworks like React",
-                "And best practices for frontend performance and accessibility"
+                "Fundamentals of AI and ML",
+                "Supervised and Unsupervised Learning",
+                "Neural Networks and Deep Learning",
+                "Natural Language Processing",
+                "AI Tools & Frameworks",
                 ].map((learn, idx) => (
                 <li key={idx} className="flex items-center">
                   <CheckIcon className="w-6 h-6 text-slate-500 mr-2" />
@@ -266,9 +249,9 @@ const FrontendCourse = () => {
           <div id="requirements">
             <h2 className="text-3xl font-bold text-blue-950 mb-4">What You Will Need</h2>
             <ul className="list-disc pl-6 text-xl text-neutral-800 space-y-2">
-              <li>Basic computer literacy</li>
-              <li>Access to a computer with internet</li>
-              <li>A desire to learn and build cool stuff</li>
+              <li>No prior experience required</li>
+              <li>Understanding of high school math (algebra, statistics)</li>
+              <li>Basic math and programming knowledge is helpful</li>
             </ul>
           </div>
 
@@ -283,7 +266,7 @@ const FrontendCourse = () => {
                   <p className="text-lg text-neutral-700 mb-4">{pdf.description}</p>
                   <button
                     onClick={() => handleOpenModal('pdfresource', index)}
-                    className="bg-slate-900 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-950 transition"
+                    className="bg-blue-950 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-800 transition"
                   >
                     Study Now
                   </button>
@@ -304,7 +287,7 @@ const FrontendCourse = () => {
                   <p className="text-sm text-neutral-500 mb-4">Duration: {video.duration}</p>
                   <button
                     onClick={() => handleOpenModal('video', index)}
-                    className="bg-slate-900 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-950 transition"
+                    className="bg-blue-950 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-800 transition"
                   >
                     Watch Now
                   </button>
@@ -314,7 +297,7 @@ const FrontendCourse = () => {
           </div>
 
           {showModal && (
-            <FrontendVideoPdfModal type={modalType} index={selectedIndex} onClose={() => setShowModal(false)} />
+            <AiVideoPdfModal type={modalType} index={selectedIndex} onClose={() => setShowModal(false)} />
           )}
 
           {/* Next Course Recommendation */}
@@ -326,7 +309,7 @@ const FrontendCourse = () => {
                 Continue your learning journey by exploring backend technologies like Node.js, Express, and databases.
               </p>
               <Link
-                to="/course/backendcourse"
+                to="/coursedatabase"
                 className="inline-block bg-blue-950 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-800 transition"
               >
                 Explore Backend Course
@@ -339,4 +322,4 @@ const FrontendCourse = () => {
   );
 };
 
-export default FrontendCourse;
+export default AiStack;

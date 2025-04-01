@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import logoii from "../assets/logoii.png";
+import logoii from "../assets/images/logoii.png";
 
 const LoadingPage = () => {
   const navigate = useNavigate();

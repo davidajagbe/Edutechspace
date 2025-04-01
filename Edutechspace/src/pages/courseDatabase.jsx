@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import {motion} from "framer-motion";
 
 // Import course images
-import cybersecurityImage from '../assets/cybersecurityImage.jpg';
-import machineLearningImage from '../assets/machineLearningImage.jpeg';
-import frontendImage from '../assets/frontendImage.jpg';
-import backendImage from '../assets/backendImage.jpg';
-import dataScienceImage from '../assets/dataScienceImage.png';
-import uiuxImage from '../assets/uiuxImage.jpg';
-import dataAnalysesImage from '../assets/dataAnalysesImage.jpg';
-import aiImage from '../assets/aiImage.jpg';
+import cybersecurityImage from '../assets/images/cybersecurityImage.jpg';
+import machineLearningImage from '../assets/images/machineLearningImage.jpeg';
+import frontendImage from '../assets/images/frontendImage.jpg';
+import backendImage from '../assets/images/backendImage.jpg';
+import dataScienceImage from '../assets/images/dataScienceImage.png';
+import uiuxImage from '../assets/images/uiuxImage.jpg';
+import dataAnalysesImage from '../assets/images/dataAnalysesImage.jpg';
+import aiImage from '../assets/images/aiImage.jpg';
 
 const courses = [  
   {

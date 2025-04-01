@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import logoiii from '../assets/logoii.png';
-import LogoutDialog from './logoutDialog';
+import logoiii from '../assets/images/logoii.png';
+import LogoutDialog from './dialog/LogoutDialog';
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 
@@ -45,7 +45,7 @@ const Navbar = () => {
               <NavLink className="navlinks" to="/">Home</NavLink>
               <NavLink className="navlinks" to="/course">All Courses</NavLink>
               <NavLink className="navlinks" to="/certification-exam">RTS Certification Exams</NavLink>
-              <NavLink className="navlinks" to="/contact">Contact us</NavLink>
+              <NavLink className="navlinks" to="/about-us">About us</NavLink>
             </div>
             {isLoggedIn && (
               <div className="flex items-center space-x-4">
