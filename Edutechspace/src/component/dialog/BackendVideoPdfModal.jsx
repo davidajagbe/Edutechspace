@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
-import backendVideo from "/Users/DELL/Downloads/Edutechspace/Edutechspace/src/assets/videos/jsxvideo.mp4"; 
+const backendVideo = "/videos/jsxvideo.mp4"; 
 
 const videoData = [
   {
