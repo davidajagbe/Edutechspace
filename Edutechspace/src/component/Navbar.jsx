@@ -9,7 +9,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 const Navbar = () => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [user, setUser] = useState('');
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
@@ -20,11 +20,11 @@ const Navbar = () => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
           const user = JSON.parse(storedUser);
-          setUserName(user.name || 'User');
+          setUser(user.name || 'User');
         }
       } else {
         setIsLoggedIn(false);
-        setUserName('');
+        setUser('');
       }
     };
 
@@ -48,9 +48,13 @@ const Navbar = () => {
               <NavLink className="navlinks" to="/about-us">About us</NavLink>
             </div>
             {isLoggedIn && (
-              <div className="flex items-center space-x-4">
-                <NavLink className="text-lg font-medium text-blue-950 navlinks cursor-pointer" to="/profile">
-                  {userName}
+              <div className="flex items-center sm:ml-[22rem] space-x-4">
+                <NavLink className=" cursor-pointer" to="/profile">
+                  <img
+                    src={user.picture || "https://i.pravatar.cc/300"}
+                    alt={user.name}
+                    className="w-14 h-14 object-cover rounded-full border-4 border-blue-950"
+                  />
                 </NavLink>
                 <button
                   className="bg-slate-200 text-blue-950 px-4 py-2 rounded-lg text-lg font-medium hover:bg-blue-950 hover:text-white transition-all hidden md:block md:ml-auto"
@@ -71,7 +75,7 @@ const Navbar = () => {
         isOpen={showLogoutModal}
         onClose={() => setShowLogoutModal(false)}
         setIsLoggedIn={setIsLoggedIn}
-        setUserName={setUserName}
+        setUser={setUser}
       />
 
       {mobileNavOpen && (

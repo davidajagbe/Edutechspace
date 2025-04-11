@@ -316,7 +316,7 @@ const DataScienceStack = () => {
                 Continue your learning journey by exploring backend technologies like Node.js, Express, and databases.
               </p>
               <Link
-                to="/coursedatabase"
+                to="/course/backendcourse"
                 className="inline-block bg-blue-950 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-800 transition"
               >
                 Explore Backend Course

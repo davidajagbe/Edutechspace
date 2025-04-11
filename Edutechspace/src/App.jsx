@@ -25,6 +25,9 @@ import DataScienceStack from './stacks/DataScienceStack';
 import UiUxStack from './stacks/UiUxStack';
 import MLStack from './stacks/MLStack';
 import AiStack from './stacks/AiStack';
+import UserDashboard from './pages/Dashboard';
+import ProtectedRoute from './component/ProtectedRoute';
+import AdminUploadPage from './pages/AdminUploadPage';
 
 
 const App = () => {
@@ -48,6 +51,7 @@ const App = () => {
         <Route path='/signup' element={<Signup />} />
         <Route path='/course' element={<Course />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/dashboard' element={<UserDashboard />} />
         <Route path='/coursedatabase' element={<CourseDatabase />} />
         <Route path='/course/frontendcourse' element={<FrontendDevStack />} />
         <Route path='/course/cybersecuritycourse' element={<CyberSecurityStack />} />
@@ -75,6 +79,11 @@ const App = () => {
         <Route path='/certification-exam/cybersecurity' element={<ExamPage {...cyberSecurityExam} />} />
         <Route path='/certification-exam/AI' element={<ExamPage {...aiExam} />} />
         <Route path='/certification-exam/machine-learning' element={<ExamPage {...aiExam} />} />
+        <Route path='/admin-resource-upload' element={
+            <ProtectedRoute requireAdmin={true}>
+            <AdminUploadPage/>
+          </ProtectedRoute>
+        } />
         <Route path='*' element={<NotFound />} />
       </Route>
     </Routes>
