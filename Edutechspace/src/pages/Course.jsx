@@ -9,8 +9,8 @@ const Course = () => {
         <h2 className="text-4xl font-semibold mb-8 tracking-tight font-heading"></h2>
         {/* RUNTECHSPACE Courses Section */}
         <div className="bg-white rounded-3xl px-12 py-10 mb-2 shadow-lg flex flex-wrap items-center">
-          <div className="w-full lg:w-1/2 p-4 items-end justify-end">
-            <h2 className="text-4xl font-medium tracking-tight font-heading text-blue-950">
+          <div className="w-full lg:w-1/ items-end justify-end">
+            <h2 className="text-4xl font-medium tracking-tight font-heading text-blue-950 flex-shrink">
               RUNTECHSPACE Courses
             </h2>
             <p className='text-slate-900 text-lg mt-2'>Looking to start something new?</p>
