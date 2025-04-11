@@ -48,7 +48,7 @@ const courses = [
     title: 'UI/UX',
     description: 'Design intuitive and engaging user interfaces and experiences.',
     image: uiuxImage,
-    link: '/courses/uiuxcourse',
+    link: '/course/uiuxcourse',
   },
   {
     title: 'Data Analyses',

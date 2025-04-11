@@ -133,7 +133,7 @@ const CyberSecurityStack = () => {
         </aside>
 
         {/* Main content */}
-        <main className="lg:w-4/5 py-12 px-6 lg:px-12 space-y-16">
+        <main className="lg:w-4/5 py-3 px-6 lg:px-12 space-y-16">
           {/* Header Section */}
           <div className="relative w-full h-[500px] overflow-hidden pb-32">
             <img

@@ -132,7 +132,7 @@ const UiUxStack = () => {
         </aside>
 
         {/* Main content */}
-        <main className="lg:w-4/5 py-12 px-6 lg:px-12 space-y-16">
+        <main className="lg:w-4/5 py-3 px-6 lg:px-12 space-y-16">
           {/* Header Section */}
           <div className="relative w-full h-[500px] overflow-hidden pb-32">
             <img
@@ -310,15 +310,15 @@ const UiUxStack = () => {
           <div className="mb-16 mt-20" id='recommendation'>
             <h2 className="text-3xl font-bold text-blue-950 mb-4">Next Course Recommendation</h2>
             <div className="bg-white p-6 rounded-2xl shadow-md">
-              <h3 className="text-2xl font-semibold text-neutral-900 mb-2">Backend Development</h3>
+              <h3 className="text-2xl font-semibold text-neutral-900 mb-2">Machine learning</h3>
               <p className="text-lg text-neutral-700 mb-4">
-                Continue your learning journey by exploring backend technologies like Node.js, Express, and databases.
+                Continue your learning journey by Leveling up your AI & data prediction skills.
               </p>
               <Link
-                to="/coursedatabase"
+                to="/course/mlcourse"
                 className="inline-block bg-blue-950 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-800 transition"
               >
-                Explore Backend Course
+                Explore Machine Learning Course
               </Link>
             </div>
           </div>

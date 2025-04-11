@@ -140,7 +140,7 @@ const BackendCourse = () => {
         </aside>
 
         {/* Main content */}
-        <main className="lg:w-4/5 py-12 px-6 lg:px-12 space-y-16">
+        <main className="lg:w-4/5 py-3 px-6 lg:px-12 space-y-16">
           {/* Header Section */}
           <div className="relative w-full h-[500px] overflow-hidden pb-32">
             <img
@@ -330,9 +330,9 @@ const BackendCourse = () => {
               </p>
               <Link
                 to="/course/cybersecuritycourse"
-                className="inline-block bg-blue-950 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-800 transition"
+                className="inline-block bg-blue-950 text-white px-6 py-3 rounded-lg text-lg hover:bg-slate-800 transition"
               >
-                Explore Backend Course
+                Explore Cyber Security Course
               </Link>
             </div>
           </div>
