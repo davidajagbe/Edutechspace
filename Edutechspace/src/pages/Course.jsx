@@ -11,14 +11,14 @@ const Course = () => {
         <div className="bg-white rounded-3xl px-12 py-10 mb-2 shadow-lg flex flex-wrap items-center">
           <div className="w-full lg:w-1/ items-end justify-end">
             <h2 className="text-4xl font-medium tracking-tight font-heading text-blue-950 flex-shrink">
-              RUNTECHSPACE Courses
+              RUNTECHSPACE COURSES
             </h2>
             <p className='text-slate-900 text-lg mt-2'>Looking to start something new?</p>
           </div>
-          <div className="w-full lg:w-1/2 flex items-center justify-end flex-wrap gap-12">
-            <h2 class="text-slate-600 text-xl font-semibold tracking-tight font-heading">Database of Run Tech Courses</h2>
+          <div className="w-full lg:w-1/2 flex gap-12 items-center justify-end flex-wrap">
+            <h2 class="text-slate-600 text-xl font-semibold tracking-tight font-heading ">Database of Run Tech Courses</h2>
             <Link
-              className="inline-flex justify-center items-center text-center h-16 p-5 font-semibold tracking-tight text-lg text-white bg-blue-950 hover:bg-slate-900 focus:bg-neutral-800 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200"
+              className=" items-center text-center h-16 p-5 font-semibold tracking-tight text-lg text-white bg-blue-950 hover:bg-slate-900 focus:bg-neutral-800 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200"
               to="/coursedatabase"
             >
               Start Learning

@@ -1,13 +1,13 @@
 // AdminUploadPage.jsx
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
 import { supabase } from "../../db/Superbase-client";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../Auth/useAuth";
+import AdminLogin from "./AdminLogin";
 
 const AdminUploadPage = () => {
-  const { user, isAdmin, signIn, signOut } = useAuth();
+  const { user, loading: authLoading, isAdmin, signOut } = useAuth();
   
   // Form and data states
   const [file, setFile] = useState(null);
@@ -30,21 +30,18 @@ const AdminUploadPage = () => {
     "Machine Learning",
   ];
 
-  // Initial authentication check is handled by ProtectedRoute
-  // Just fetch resources on component mount if user exists
+  // Initial resources fetch when user is authenticated
   useEffect(() => {
-    if (user) {
-      fetchAllResources();
-    } else {
-      setLoading(false);
+    if (!authLoading && user && isAdmin) {
+      fetchResources();
     }
-  }, [user]);
+  }, [authLoading, user, isAdmin]);
 
   // Fetch resources for a specific course
   const fetchResources = async () => {
+    if (!user || !isAdmin) return;
     if (!courseType) {
       await fetchAllResources();
-      return;
     }
     
     setLoading(true);
@@ -66,6 +63,20 @@ const AdminUploadPage = () => {
     } finally {
       setLoading(false);
     }
+
+    try {
+      const { data, error } = await supabase
+        .from('course_resources')
+        .select('*')
+        .order('timestamp', { ascending: false });
+  
+      if (error) throw error;
+      setResourceUrl(data || []);
+    } catch (error) {
+      console.error('Error fetching resources:', error);
+      toast.error('Failed to load resources');
+    }
+    };
   };
 
   // Fetch all resources
@@ -92,7 +103,7 @@ const AdminUploadPage = () => {
 
   // Fetch resources when course selection changes
   useEffect(() => {
-    if (user && courseType !== undefined) {
+    if (user && isAdmin() && courseType !== undefined) {
       fetchResources();
     }
   }, [courseType]);
@@ -232,35 +243,51 @@ const AdminUploadPage = () => {
     }
   };
 
-  // Handle user not logged in or not being an admin
+  // Show loading state while authenticating
+  if (authLoading) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 mt-10 bg-white shadow-lg rounded-md text-center">
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+        <p className="mt-2 text-gray-600">Checking authentication...</p>
+      </div>
+    );
+  }
+
+  // Show login form if not authenticated
   if (!user) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 mt-10 bg-white shadow-lg rounded-md">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+          Admin Resource Upload
+        </h2>
+        <AdminLogin />
+        <ToastContainer position="bottom-right" />
+      </div>
+    );
+  }
+
+  // Redirect or show unauthorized message if user is not an admin
+  if (!isAdmin()) {
     return (
       <div className="max-w-4xl mx-auto p-6 mt-10 bg-white shadow-lg rounded-md text-center">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">
-          Admin Resource Upload
+          Unauthorized Access
         </h2>
-        <p className="mb-6 text-gray-600">Please sign in with Google to access this page</p>
+        <p className="mb-6 text-gray-600">
+          Your account ({user.email}) is not authorized to access the admin area.
+        </p>
         <button
-          onClick={signIn}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md transition flex items-center mx-auto"
+          onClick={signOut}
+          className="bg-red-500 hover:bg-red-600 text-white py-2 px-6 rounded-md transition"
         >
-          <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill="#ffffff"
-              d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"
-            />
-          </svg>
-          Sign in with Google
+          Sign Out
         </button>
         <ToastContainer position="bottom-right" />
       </div>
     );
   }
 
-  if (!isAdmin()) {
-    return <Navigate to="/" replace />;
-  }
-
+  // Admin dashboard view
   return (
     <div className="max-w-4xl mx-auto p-6 mt-10 bg-white shadow-lg rounded-md">
       <div className="flex justify-between items-center mb-6">

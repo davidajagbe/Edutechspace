@@ -79,11 +79,8 @@ const App = () => {
         <Route path='/certification-exam/cybersecurity' element={<ExamPage {...cyberSecurityExam} />} />
         <Route path='/certification-exam/AI' element={<ExamPage {...aiExam} />} />
         <Route path='/certification-exam/machine-learning' element={<ExamPage {...aiExam} />} />
-        <Route path='/admin-resource-upload' element={
-            <ProtectedRoute requireAdmin={true}>
-            <AdminUploadPage/>
-          </ProtectedRoute>
-        } />
+      {/* Direct route to admin page (no protection at router level) */}
+      <Route path="/admin/resource-upload" element={<AdminUploadPage />} />
         <Route path='*' element={<NotFound />} />
       </Route>
     </Routes>
