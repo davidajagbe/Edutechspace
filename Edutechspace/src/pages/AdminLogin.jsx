@@ -23,8 +23,12 @@ const AdminLogin = ({ onLoginSuccess }) => {
 
       if (error) throw error;
       
-      onLoginSuccess && onLoginSuccess(data.user);
       toast.success("Login successful!");
+      
+      // Wait a bit before calling the success callback to ensure state updates are complete
+      setTimeout(() => {
+        onLoginSuccess && onLoginSuccess(data.user);
+      }, 500);
     } catch (error) {
       console.error("Login error:", error);
       toast.error(error.message || "Login failed");
@@ -37,14 +41,19 @@ const AdminLogin = ({ onLoginSuccess }) => {
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
+      // Form an absolute URL for the redirect
+      const redirectUrl = new URL(window.location.pathname, window.location.origin).href;
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin + window.location.pathname
+          redirectTo: redirectUrl
         }
       });
 
       if (error) throw error;
+      
+      // Note: we don't need to handle success here as the page will redirect
     } catch (error) {
       console.error("Google login error:", error);
       toast.error(error.message || "Google login failed");

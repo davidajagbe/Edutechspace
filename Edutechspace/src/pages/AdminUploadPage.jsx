@@ -42,6 +42,7 @@ const AdminUploadPage = () => {
     if (!user || !isAdmin) return;
     if (!courseType) {
       await fetchAllResources();
+      return;
     }
     
     setLoading(true);
@@ -63,20 +64,6 @@ const AdminUploadPage = () => {
     } finally {
       setLoading(false);
     }
-
-    try {
-      const { data, error } = await supabase
-        .from('course_resources')
-        .select('*')
-        .order('timestamp', { ascending: false });
-  
-      if (error) throw error;
-      setResourceUrl(data || []);
-    } catch (error) {
-      console.error('Error fetching resources:', error);
-      toast.error('Failed to load resources');
-    }
-    };
   };
 
   // Fetch all resources
@@ -103,7 +90,7 @@ const AdminUploadPage = () => {
 
   // Fetch resources when course selection changes
   useEffect(() => {
-    if (user && isAdmin() && courseType !== undefined) {
+    if (user && isAdmin && courseType !== undefined) {
       fetchResources();
     }
   }, [courseType]);
@@ -260,14 +247,14 @@ const AdminUploadPage = () => {
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           Admin Resource Upload
         </h2>
-        <AdminLogin />
+        <AdminLogin onLoginSuccess={() => fetchResources()} />
         <ToastContainer position="bottom-right" />
       </div>
     );
   }
 
   // Redirect or show unauthorized message if user is not an admin
-  if (!isAdmin()) {
+  if (!isAdmin) {
     return (
       <div className="max-w-4xl mx-auto p-6 mt-10 bg-white shadow-lg rounded-md text-center">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">
