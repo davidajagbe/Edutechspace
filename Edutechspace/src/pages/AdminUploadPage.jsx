@@ -87,7 +87,24 @@ const AdminUploadPage = () => {
       setLoading(false);
     }
   };
-
+  // Add this to a component temporarily
+useEffect(() => {
+  const testConnection = async () => {
+    try {
+      console.log("Testing Supabase connection...");
+      console.log("URL:", import.meta.env.VITE_SUPABASE_URL);
+      // Don't log the full key for security reasons
+      console.log("Key exists:", !!import.meta.env.VITE_SUPABASE_ANON_KEY);
+      
+      const { data, error } = await supabase.from('course_resources').select('count');
+      console.log("Connection test result:", { data, error });
+    } catch (err) {
+      console.error("Connection test error:", err);
+    }
+  };
+  
+  testConnection();
+}, []);
   // Fetch resources when course selection changes
   useEffect(() => {
     if (user && isAdmin && courseType !== undefined) {
