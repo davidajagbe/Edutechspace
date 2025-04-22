@@ -28,7 +28,6 @@ import AiStack from './stacks/AiStack';
 import UserDashboard from './pages/Dashboard';
 import ProtectedRoute from './component/ProtectedRoute';
 import AdminUploadPage from './pages/AdminUploadPage';
-import TailwindIndex from './tailwind/tailwindIndex';
 
 
 const App = () => {
