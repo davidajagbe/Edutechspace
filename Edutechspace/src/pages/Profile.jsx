@@ -42,7 +42,7 @@ const UserProfile = () => {
             </div>
 
             <div className="flex gap-4 mt-8">
-              <Link className="bg-blue-950 text-white px-6 py-2 rounded-md hover:bg-blue-900" to="admin/resource-upload">
+              <Link className="bg-blue-950 text-white px-6 py-2 rounded-md hover:bg-blue-900" to="/admin/resource-upload">
                 Resouce Upload
               </Link>
               <button className="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700">

@@ -28,6 +28,7 @@ import AiStack from './stacks/AiStack';
 import UserDashboard from './pages/Dashboard';
 import ProtectedRoute from './component/ProtectedRoute';
 import AdminUploadPage from './pages/AdminUploadPage';
+import TailwindIndex from './tailwind/tailwindIndex';
 
 
 const App = () => {
@@ -63,6 +64,7 @@ const App = () => {
         <Route path='/contact' element={<Contact />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/certification-exam' element={<CertificateExam />} />
+        <Route path='/tailwind' element={<TailwindIndex />} />
         <Route path='/certification-exam/frontend' element={
           <ExamPage 
             title={frontendExam.title}
