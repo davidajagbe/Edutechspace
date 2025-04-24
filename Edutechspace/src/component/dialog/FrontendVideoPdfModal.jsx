@@ -1,63 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
-const videoresource = "/videos/jsxvideo.mp4";
-// import pdfresource from "/Users/DELL/Downloads/Edutechspace/Edutechspace/src/assets/videos/jsxvideo.mp4";
-
-const videoData = [
-  {
-    id: 1,
-    title: "Getting Started With HTML",
-    src: videoresource,
-    requirement: "No prior coding experience needed. A laptop and internet connection are sufficient.",
-    description: "This video introduces HTML, the foundation of all websites. You'll learn how to create and structure elements like headings, paragraphs, links, and lists, giving you a solid base for future frontend development."
-  },
-  {
-    id: 2,
-    title: "Introduction to CSS",
-    src: videoresource,
-    requirement: "Basic understanding of HTML structure is recommended.",
-    description: "Learn how to style your web pages using CSS. This lesson covers color, fonts, spacing, and layout techniques to make your websites visually appealing and responsive."
-  },
-  {
-    id: 3,
-    title: "JavaScript Basics",
-    src: videoresource,
-    requirement: "Basic knowledge of HTML and CSS is helpful but not required.",
-    description: "Explore the power of JavaScript—the language that brings your web pages to life. We'll cover variables, data types, functions, events, and simple DOM manipulation."
-  },
-  {
-    id: 4,
-    title: "Intro to React Basics",
-    src: videoresource,
-    requirement: "Solid understanding of JavaScript fundamentals is required.",
-    description: "Step into modern frontend development with React. This video introduces JSX, components, props, and state to help you start building dynamic web applications."
-  }
-];
-
-const pdfData = [
-  {
-    id: 1,
-    title: "HTML Guide",
-    src: "https://www.researchgate.net/publication/333844149_Cyber_Security_Essentials",
-    requirement: "No prior coding experience needed. A laptop and internet connection are sufficient.",
-    description: "This video introduces HTML, the foundation of all websites. You'll learn how to create and structure elements like headings, paragraphs, links, and lists, giving you a solid base for future frontend de"
-  },
-  {
-    id: 2,
-    title: "CSS Basics",
-    src: "https://www.researchgate.net/publication/333844149_Cyber_Security_Essentials",
-    requirement: "No prior coding experience needed. A laptop and internet connection are sufficient.",
-    description: "This video introduces HTML, the foundation of all websites. You'll learn how to create and structure elements like headings, paragraphs, links, and lists, giving you a solid base for future frontend de"
-  }
-];
-
-
+import { supabase } from "../../../db/Superbase-client"; // Adjust path as needed
 
 const FrontendVideoPdfModal = ({ type, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [resources, setResources] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
   const isVideo = type === 'video';
-  const data = isVideo ? videoData : pdfData;
+  const courseType = "Frontend Development"; // This is fixed for this component
 
+  // Fetch resources from Supabase
+  useEffect(() => {
+    const fetchResources = async () => {
+      try {
+        setLoading(true);
+        
+        const { data, error } = await supabase
+          .from('course_resources')
+          .select('*')
+          .eq('course_type', courseType)
+          .eq('resource_type', isVideo ? 'Video' : 'PDF')
+          .order('created_at', { ascending: false });
+          
+        if (error) throw error;
+        
+        if (data && data.length > 0) {
+          setResources(data);
+        } else {
+          // Fallback to mock data if no resources found
+          console.warn('No resources found, using fallback data');
+          setResources(getFallbackData());
+        }
+      } catch (err) {
+        console.error('Error fetching resources:', err);
+        setError('Failed to load resources');
+        // Use fallback data on error
+        setResources(getFallbackData());
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchResources();
+  }, [courseType, isVideo]);
+
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowRight') next();
@@ -69,45 +58,115 @@ const FrontendVideoPdfModal = ({ type, onClose }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentIndex]);
 
+  // Load saved index
   useEffect(() => {
-    const savedIndex = localStorage.getItem(`current-${type}-index`);
+    const savedIndex = localStorage.getItem(`current-${type}-index-${courseType}`);
     if (savedIndex) setCurrentIndex(parseInt(savedIndex));
-  }, [type]);
+  }, [type, courseType]);
 
+  // Save current index
   useEffect(() => {
-    localStorage.setItem(`current-${type}-index`, currentIndex);
-  }, [currentIndex, type]);
+    localStorage.setItem(`current-${type}-index-${courseType}`, currentIndex);
+  }, [currentIndex, type, courseType]);
+
+  // Fallback data in case no resources are found
+  const getFallbackData = () => {
+    if (isVideo) {
+      return [
+        {
+          id: 1,
+          title: "Getting Started With HTML",
+          resource_url: "/videos/jsxvideo.mp4",
+          description: "This video introduces HTML, the foundation of all websites. You'll learn how to create and structure elements like headings, paragraphs, links, and lists, giving you a solid base for future frontend development."
+        },
+        {
+          id: 2,
+          title: "Introduction to CSS",
+          resource_url: "/videos/jsxvideo.mp4",
+          description: "Learn how to style your web pages using CSS. This lesson covers color, fonts, spacing, and layout techniques to make your websites visually appealing and responsive."
+        }
+      ];
+    } else {
+      return [
+        {
+          id: 1,
+          title: "HTML Guide",
+          resource_url: "https://www.researchgate.net/publication/333844149_Cyber_Security_Essentials",
+          description: "Comprehensive guide to HTML fundamentals and best practices for frontend developers."
+        },
+        {
+          id: 2,
+          title: "CSS Basics",
+          resource_url: "https://www.researchgate.net/publication/333844149_Cyber_Security_Essentials",
+          description: "Learn CSS from the ground up with this complete guide to styling web pages."
+        }
+      ];
+    }
+  };
 
   const next = () => {
-    if (currentIndex < data.length - 1) setCurrentIndex(currentIndex + 1);
+    if (currentIndex < resources.length - 1) setCurrentIndex(currentIndex + 1);
   };
+  
   const prev = () => {
     if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
   };
 
+  // Show loading state
+  if (loading) {
+    return (
+      <Dialog open={true} onClose={onClose} className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 p-4">
+        <DialogPanel className="bg-white p-6 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-xl">
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+            <p className="mt-4 text-gray-600">Loading resources...</p>
+          </div>
+        </DialogPanel>
+      </Dialog>
+    );
+  }
+
+  // Show error state
+  if (error || resources.length === 0) {
+    return (
+      <Dialog open={true} onClose={onClose} className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 p-4">
+        <DialogPanel className="bg-white p-6 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-xl">
+          <DialogTitle className="text-xl sm:text-2xl font-bold mb-4 text-center">Error</DialogTitle>
+          <div className="text-center py-8">
+            <p className="text-red-500 mb-4">{error || "No resources available"}</p>
+            <button onClick={onClose} className="bg-blue-950 text-white py-2 px-6 rounded-lg hover:bg-blue-800 transition">Close</button>
+          </div>
+        </DialogPanel>
+      </Dialog>
+    );
+  }
+
+  // Get current resource
+  const currentResource = resources[currentIndex];
+
   return (
     <Dialog open={true} onClose={onClose} className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 p-4">
       <DialogPanel className="bg-white p-6 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-xl">
-        <DialogTitle className="text-xl sm:text-2xl font-bold mb-4 text-center">{data[currentIndex].title}</DialogTitle>
+        <DialogTitle className="text-xl sm:text-2xl font-bold mb-4 text-center">{currentResource.title}</DialogTitle>
         <div className="flex justify-between items-center flex-wrap gap-4">
           <button onClick={prev} disabled={currentIndex === 0} className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50">Previous</button>
-          <span className="text-sm sm:text-base">{currentIndex + 1} / {data.length}</span>
-          <button onClick={next} disabled={currentIndex === data.length - 1} className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50">Next</button>
+          <span className="text-sm sm:text-base">{currentIndex + 1} / {resources.length}</span>
+          <button onClick={next} disabled={currentIndex === resources.length - 1} className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50">Next</button>
         </div>
 
         {isVideo ? (
-          <video controls className="w-full h-[200px] sm:h-[350px] md:h-[450px] lg:h-[500px] rounded mb-4" src={data[currentIndex].src}></video>
+          <video controls className="w-full h-[200px] sm:h-[350px] md:h-[450px] lg:h-[500px] rounded mb-4" src={currentResource.resource_url}></video>
         ) : (
           <iframe
-            title={data[currentIndex].title}
-            src={data[currentIndex].src}
+            title={currentResource.title}
+            src={currentResource.resource_url}
             className="w-full h-[400px] sm:h-[500px] rounded mb-4"
           ></iframe>
         )}
 
         {/* Progress Indicator */}
         <div className="flex justify-center gap-2 my-4">
-          {data.map((_, idx) => (
+          {resources.map((_, idx) => (
             <span
               onClick={() => setCurrentIndex(idx)}
               key={idx}
@@ -116,13 +175,17 @@ const FrontendVideoPdfModal = ({ type, onClose }) => {
           ))}
         </div>
 
-        {/* Course Outline */}
+        {/* Course Details */}
         <div className="bg-gray-100 p-4 rounded-md mb-4">
-            <h3 className="text-lg font-semibold mb-2">Requirement</h3>
-            <p className="text-sm text-gray-700 mb-3">{data[currentIndex].requirement}</p>
-
-            <h3 className="text-lg font-semibold mb-2">Description</h3>
-            <p className="text-sm text-gray-700">{data[currentIndex].description}</p>
+            <h3 className="text-lg font-semibold mb-2">Details</h3>
+            <p className="text-sm text-gray-700">{currentResource.description}</p>
+            
+            {/* Show uploaded date if available */}
+            {currentResource.created_at && (
+              <p className="text-xs text-gray-500 mt-4">
+                Uploaded: {new Date(currentResource.created_at).toLocaleDateString()}
+              </p>
+            )}
         </div>
 
         <button onClick={onClose} className="mt-6 w-full bg-blue-950 text-white py-3 rounded-lg text-lg hover:bg-blue-800 transition">Close</button>
