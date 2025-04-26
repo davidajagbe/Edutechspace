@@ -4,6 +4,7 @@ import { supabase } from '../db/Superbase-client';
 export const useAuth = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAdminState, setIsAdminState] = useState(false);
   const refreshTimeout = useRef(null);
   const refreshAttempts = useRef(0);
   const MAX_RETRIES = 5;
@@ -47,6 +48,7 @@ export const useAuth = () => {
         console.warn("Max refresh retries reached, forcing logout");
         await supabase.auth.signOut();
         setUser(null);
+        setIsAdminState(false);
         refreshAttempts.current = 0;
         return;
       }
@@ -76,16 +78,38 @@ export const useAuth = () => {
       
       if (data.session) {
         setUser(data.session.user);
+        checkAdminStatus(data.session.user);
         // Schedule next refresh
         scheduleRefresh(data.session.expires_in);
       } else {
         setUser(null);
+        setIsAdminState(false);
       }
     } catch (err) {
       console.error("Session refresh failed:", err);
       
       // If refresh fails completely, try again in 30 seconds
       setTimeout(() => refreshSession(), 30000);
+    }
+  };
+
+  const checkAdminStatus = (currentUser) => {
+    if (!currentUser) {
+      setIsAdminState(false);
+      return;
+    }
+    
+    try {
+      const whitelist = import.meta.env.VITE_ADMIN_WHITELIST?.split(',') || [];
+      // Trim whitespace from emails for better matching
+      const normalizedWhitelist = whitelist.map(email => email.trim());
+      const isAdmin = normalizedWhitelist.includes(currentUser.email);
+      console.log(`Admin check for ${currentUser.email}: ${isAdmin}`);
+      console.log("Admin whitelist:", normalizedWhitelist);
+      setIsAdminState(isAdmin);
+    } catch (err) {
+      console.error("Admin check error:", err);
+      setIsAdminState(false);
     }
   };
 
@@ -98,9 +122,11 @@ export const useAuth = () => {
       
       if (data.session) {
         setUser(data.session.user);
+        checkAdminStatus(data.session.user);
         scheduleRefresh(data.session.expires_in);
       } else {
         setUser(null);
+        setIsAdminState(false);
       }
       
       // Clean up URL if there's an OAuth redirect
@@ -121,9 +147,11 @@ export const useAuth = () => {
       
       if (session) {
         setUser(session.user);
+        checkAdminStatus(session.user);
         scheduleRefresh(session.expires_in);
       } else {
         setUser(null);
+        setIsAdminState(false);
       }
     });
 
@@ -155,20 +183,9 @@ export const useAuth = () => {
       clearTimeout(refreshTimeout.current);
       await supabase.auth.signOut();
       setUser(null);
+      setIsAdminState(false);
     } catch (err) {
       console.error("Sign out error:", err);
-    }
-  };
-
-  const isAdmin = () => {
-    if (!user) return false;
-    
-    try {
-      const whitelist = import.meta.env.VITE_ADMIN_WHITELIST?.split(',') || [];
-      return whitelist.includes(user.email);
-    } catch (err) {
-      console.error("Admin check error:", err);
-      return false;
     }
   };
 
@@ -177,6 +194,6 @@ export const useAuth = () => {
     loading,
     signInWithGoogle,
     signOut,
-    isAdmin
+    isAdmin: isAdminState // Return as a property, not a function
   };
 };

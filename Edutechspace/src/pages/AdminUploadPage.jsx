@@ -1,4 +1,4 @@
-// AdminUploadPage.jsx
+// AdminUploadPage.jsx - Updated isAdmin usage
 import { useState, useEffect } from "react";
 import { supabase } from "../../db/Superbase-client";
 import { toast, ToastContainer } from "react-toastify";
@@ -87,30 +87,32 @@ const AdminUploadPage = () => {
       setLoading(false);
     }
   };
-  // Add this to a component temporarily
-useEffect(() => {
-  const testConnection = async () => {
-    try {
-      console.log("Testing Supabase connection...");
-      console.log("URL:", import.meta.env.VITE_SUPABASE_URL);
-      // Don't log the full key for security reasons
-      console.log("Key exists:", !!import.meta.env.VITE_SUPABASE_ANON_KEY);
-      
-      const { data, error } = await supabase.from('course_resources').select('count');
-      console.log("Connection test result:", { data, error });
-    } catch (err) {
-      console.error("Connection test error:", err);
-    }
-  };
-  
-  testConnection();
-}, []);
+
+  // Testing Supabase connection
+  useEffect(() => {
+    const testConnection = async () => {
+      try {
+        console.log("Testing Supabase connection...");
+        console.log("URL:", import.meta.env.VITE_SUPABASE_URL);
+        // Don't log the full key for security reasons
+        console.log("Key exists:", !!import.meta.env.VITE_SUPABASE_ANON_KEY);
+        
+        const { data, error } = await supabase.from('course_resources').select('count');
+        console.log("Connection test result:", { data, error });
+      } catch (err) {
+        console.error("Connection test error:", err);
+      }
+    };
+    
+    testConnection();
+  }, []);
+
   // Fetch resources when course selection changes
   useEffect(() => {
     if (user && isAdmin && courseType !== undefined) {
       fetchResources();
     }
-  }, [courseType]);
+  }, [courseType, user, isAdmin]);
 
   // Handle file upload or video link submission
   const handleUpload = async () => {
@@ -309,7 +311,9 @@ useEffect(() => {
         </div>
       </div>
 
+      {/* Rest of the component remains the same */}
       <div className="bg-gray-50 p-4 rounded-md mb-6">
+        {/* Form content remains the same */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Course Type*</label>

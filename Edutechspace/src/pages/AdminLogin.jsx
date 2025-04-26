@@ -16,6 +16,9 @@ const AdminLogin = ({ onLoginSuccess }) => {
     setLoading(true);
 
     try {
+      // For debugging
+      console.log("Attempting email login with:", email);
+      
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
@@ -23,11 +26,14 @@ const AdminLogin = ({ onLoginSuccess }) => {
 
       if (error) throw error;
       
+      console.log("Login successful:", data.user);
       toast.success("Login successful!");
       
       // Wait a bit before calling the success callback to ensure state updates are complete
       setTimeout(() => {
-        onLoginSuccess && onLoginSuccess(data.user);
+        if (onLoginSuccess) {
+          onLoginSuccess(data.user);
+        }
       }, 500);
     } catch (error) {
       console.error("Login error:", error);
@@ -39,27 +45,27 @@ const AdminLogin = ({ onLoginSuccess }) => {
 
   // Google OAuth login
   const handleGoogleLogin = async () => {
-  setLoading(true);
-  try {
-    // Form an absolute URL for the redirect that respects the current environment
-    const redirectUrl = window.location.origin + window.location.pathname;
-    
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: redirectUrl
-      }
-    });
+    setLoading(true);
+    try {
+      // Form an absolute URL for the redirect that respects the current environment
+      const redirectUrl = window.location.origin + window.location.pathname;
+      
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: redirectUrl
+        }
+      });
 
-    if (error) throw error;
-    
-    // Note: we don't need to handle success here as the page will redirect
-  } catch (error) {
-    console.error("Google login error:", error);
-    toast.error(error.message || "Google login failed");
-    setLoading(false);
-  }
-};
+      if (error) throw error;
+      
+      // Note: we don't need to handle success here as the page will redirect
+    } catch (error) {
+      console.error("Google login error:", error);
+      toast.error(error.message || "Google login failed");
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-md">
