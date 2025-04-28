@@ -6,10 +6,62 @@ const Course = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+
+  // CRUD Operations
+  const fetchCourses = async () => {
+    try {
+      const response = await courseService.getCourses();
+      setCourses(response);
+      setError(null);
+    } catch (err) {
+      setError('Failed to fetch courses');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createCourse = async (courseData) => {
+    try {
+      const newCourse = await courseService.createCourse(courseData);
+      setCourses([...courses, newCourse]);
+      return true;
+    } catch (err) {
+      setError('Failed to create course');
+      console.error(err);
+      return false;
+    }
+  };
+
+  const updateCourse = async (id, courseData) => {
+    try {
+      const updatedCourse = await courseService.updateCourse(id, courseData);
+      setCourses(courses.map(course => 
+        course.id === id ? updatedCourse : course
+      ));
+      return true;
+    } catch (err) {
+      setError('Failed to update course');
+      console.error(err);
+      return false;
+    }
+  };
+
+  const deleteCourse = async (id) => {
+    try {
+      await courseService.deleteCourse(id);
+      setCourses(courses.filter(course => course.id !== id));
+      return true;
+    } catch (err) {
+      setError('Failed to delete course');
+      console.error(err);
+      return false;
+    }
+  };
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    fetchCourses();
+  }, []);
       try {
         const response = await courseService.getCourses();
         setCourses(response.data);
