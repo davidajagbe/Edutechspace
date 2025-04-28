@@ -7,6 +7,30 @@ import CourseProgress from "../component/CourseProgress";
 const UserDashboard = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          const userData = JSON.parse(storedUser);
+          setUser(userData);
+          const progress = await courseService.getCourseProgress(userData.id);
+          setUserProgress(progress.data);
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadUserData();
+  }, []);
+
+  if (loading) return <LoadingPage />;
+  if (error) return <div className="text-red-500">Error: {error}</div>;
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");

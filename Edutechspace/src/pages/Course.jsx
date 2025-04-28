@@ -3,6 +3,25 @@ import React, { useState, useEffect } from 'react';
 //import { courseService } from '../services/api'; //Commented out because the service is not defined.
 
 const Course = () => {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await courseService.getCourses();
+        setCourses(response.data);
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCourses();
+  }, []);
+
+  if (loading) return <LoadingPage />;
+
   return (
     <section className="bg-neutral-100 py-12 md:py-24">
       <div className="container mx-auto px-4">

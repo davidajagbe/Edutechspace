@@ -1,47 +1,27 @@
+import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = '/api';
 
 export const courseService = {
-  // Get all courses
-  getAllCourses: async () => {
-    const response = await fetch(`${API_URL}/courses`);
-    return response.json();
-  },
-
-  // Get single course
-  getCourse: async (id) => {
-    const response = await fetch(`${API_URL}/courses/${id}`);
-    return response.json();
-  },
-
-  // Create course
+  getCourses: () => axios.get(`${API_URL}/courses`),
+  getCourseById: (id) => axios.get(`${API_URL}/courses/${id}`),
   createCourse: async (courseData) => {
-    const response = await fetch(`${API_URL}/courses`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(courseData),
-    });
-    return response.json();
+    const response = await axios.post(`${API_URL}/courses`, courseData);
+    return response.data;
   },
-
-  // Update course
   updateCourse: async (id, courseData) => {
-    const response = await fetch(`${API_URL}/courses/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(courseData),
-    });
-    return response.json();
+    const response = await axios.put(`${API_URL}/courses/${id}`, courseData);
+    return response.data;
   },
-
-  // Delete course
   deleteCourse: async (id) => {
-    await fetch(`${API_URL}/courses/${id}`, {
-      method: 'DELETE',
-    });
+    await axios.delete(`${API_URL}/courses/${id}`);
   },
+  updateProgress: (userId, courseId, progress) => 
+    axios.post(`${API_URL}/progress`, { userId, courseId, progress }),
+  updateUserProfile: (userId, data) =>
+    axios.put(`${API_URL}/users/${userId}`, data),
+  getWeeklyGoals: (userId) => 
+    axios.get(`${API_URL}/goals/${userId}`),
+  setWeeklyGoal: (userId, goal) =>
+    axios.post(`${API_URL}/goals`, { userId, goal })
 };
