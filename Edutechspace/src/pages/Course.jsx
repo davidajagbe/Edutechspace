@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+//import { courseService } from '../services/api'; //Commented out because the service is not defined.
 
 const Course = () => {
   return (
