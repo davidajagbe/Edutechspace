@@ -2,8 +2,20 @@ import axios from 'axios';
 
 const API_URL = '/api';
 
+const handleError = (error) => {
+  console.error('API Error:', error);
+  throw error?.response?.data || error.message;
+};
+
 export const courseService = {
-  getCourses: () => axios.get(`${API_URL}/courses`),
+  getCourses: async () => {
+    try {
+      const response = await axios.get(`${API_URL}/courses`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+    }
+  },
   getCourseById: (id) => axios.get(`${API_URL}/courses/${id}`),
   createCourse: async (courseData) => {
     const response = await axios.post(`${API_URL}/courses`, courseData);
