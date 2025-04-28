@@ -9,7 +9,7 @@ run = ["sh", "-c", "cd Edutechspace && npm run preview -- --host 0.0.0.0"]
 build = ["sh", "-c", "cd Edutechspace && npm run build"]
 
 [workflows]
-runButton = "Dev Server"
+runButton = "Run Dev Server"
 
 [[workflows.workflow]]
 name = "Run Dev Server"
@@ -36,3 +36,7 @@ args = "cd Edutechspace/server && node src/index.js"
 [[ports]]
 localPort = 5173
 externalPort = 80
+
+[[ports]]
+localPort = 5174
+externalPort = 3000
