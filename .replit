@@ -9,7 +9,7 @@ run = ["sh", "-c", "cd Edutechspace && npm run preview -- --host 0.0.0.0"]
 build = ["sh", "-c", "cd Edutechspace && npm run build"]
 
 [workflows]
-runButton = "Run Dev Server"
+runButton = "Dev Server"
 
 [[workflows.workflow]]
 name = "Run Dev Server"
@@ -19,6 +19,19 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd Edutechspace && npm run dev"
+
+[[workflows.workflow]]
+name = "Dev Server"
+author = 18292213
+mode = "parallel"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd Edutechspace && npm run dev"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd Edutechspace/server && node src/index.js"
 
 [[ports]]
 localPort = 5173
