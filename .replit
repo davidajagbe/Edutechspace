@@ -1,0 +1,21 @@
+modules = ["nodejs-20", "web", "bash"]
+run = "npm run dev"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "cd Edutechspace && npm run preview -- --host 0.0.0.0"]
+build = ["sh", "-c", "cd Edutechspace && npm run build"]
+
+[workflows]
+runButton = "Run Dev Server"
+
+[[workflows.workflow]]
+name = "Run Dev Server"
+author = 18292213
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd Edutechspace && npm run dev -- --host 0.0.0.0"
