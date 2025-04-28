@@ -1,21 +1,20 @@
-
 const express = require('express');
 const cors = require('cors');
-const { createClient } = require('@supabase/supabase-js');
-require('dotenv').config();
+const helmet = require('helmet');
+const morgan = require('morgan');
+const errorHandler = require('./middleware/errorHandler');
+const authMiddleware = require('./middleware/auth');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-// Initialize Supabase
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL,
-  process.env.VITE_SUPABASE_ANON_KEY
-);
-
-// Middleware
 app.use(cors());
+app.use(helmet());
+app.use(morgan('dev'));
 app.use(express.json());
+
+// Protected routes
+app.use('/api/courses', authMiddleware);
+app.use('/api/profile', authMiddleware);
 
 // User Routes
 app.get('/api/users/:id', async (req, res) => {
@@ -25,7 +24,7 @@ app.get('/api/users/:id', async (req, res) => {
       .select('*')
       .eq('id', req.params.id)
       .single();
-    
+
     if (error) throw error;
     res.json(data);
   } catch (err) {
@@ -40,7 +39,7 @@ app.put('/api/users/:id', async (req, res) => {
       .update(req.body)
       .eq('id', req.params.id)
       .select();
-    
+
     if (error) throw error;
     res.json(data[0]);
   } catch (err) {
@@ -55,7 +54,7 @@ app.post('/api/progress', async (req, res) => {
       .from('course_progress')
       .insert([req.body])
       .select();
-    
+
     if (error) throw error;
     res.status(201).json(data[0]);
   } catch (err) {
@@ -69,7 +68,7 @@ app.get('/api/progress/:userId', async (req, res) => {
       .from('course_progress')
       .select('*')
       .eq('user_id', req.params.userId);
-    
+
     if (error) throw error;
     res.json(data);
   } catch (err) {
@@ -84,7 +83,7 @@ app.post('/api/goals', async (req, res) => {
       .from('weekly_goals')
       .insert([req.body])
       .select();
-    
+
     if (error) throw error;
     res.status(201).json(data[0]);
   } catch (err) {
@@ -99,7 +98,7 @@ app.put('/api/goals/:id', async (req, res) => {
       .update(req.body)
       .eq('id', req.params.id)
       .select();
-    
+
     if (error) throw error;
     res.json(data[0]);
   } catch (err) {
@@ -107,9 +106,6 @@ app.put('/api/goals/:id', async (req, res) => {
   }
 });
 
-// Middleware
-app.use(cors());
-app.use(express.json());
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -125,7 +121,7 @@ app.get('/api/courses', async (req, res) => {
     const { data, error } = await supabase
       .from('courses')
       .select('*');
-    
+
     if (error) throw error;
     res.json(data);
   } catch (err) {
@@ -141,7 +137,7 @@ app.get('/api/courses/:id', async (req, res) => {
       .select('*')
       .eq('id', req.params.id)
       .single();
-    
+
     if (error) throw error;
     res.json(data);
   } catch (err) {
@@ -156,7 +152,7 @@ app.post('/api/courses', async (req, res) => {
       .from('courses')
       .insert([req.body])
       .select();
-    
+
     if (error) throw error;
     res.status(201).json(data[0]);
   } catch (err) {
@@ -172,7 +168,7 @@ app.put('/api/courses/:id', async (req, res) => {
       .update(req.body)
       .eq('id', req.params.id)
       .select();
-    
+
     if (error) throw error;
     res.json(data[0]);
   } catch (err) {
@@ -187,7 +183,7 @@ app.delete('/api/courses/:id', async (req, res) => {
       .from('courses')
       .delete()
       .eq('id', req.params.id);
-    
+
     if (error) throw error;
     res.status(204).send();
   } catch (err) {
@@ -195,6 +191,7 @@ app.delete('/api/courses/:id', async (req, res) => {
   }
 });
 
+app.use(errorHandler);
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
