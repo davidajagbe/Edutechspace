@@ -19,3 +19,7 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd Edutechspace && npm run dev -- --host 0.0.0.0"
+
+[[ports]]
+localPort = 5173
+externalPort = 80
