@@ -11,8 +11,6 @@ const CookieToken = (res, userId) => {
   });
 
   console.log('Cookie Token Generated:', token);
-  console.log('Cookie Set:', res.getHeaders());
-
   return token; // Return token for use in response
 };
 

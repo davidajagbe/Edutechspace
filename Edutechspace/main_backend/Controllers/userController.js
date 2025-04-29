@@ -1,5 +1,9 @@
 import supabase from '../config/supabase.js';
 
+
+// desc Get User Profile
+// http request GET Request
+// Acess Private
 export const getProfile = async (req, res) => {
   const { userId } = req.user;
   try {
@@ -16,6 +20,10 @@ export const getProfile = async (req, res) => {
   }
 };
 
+
+// desc 
+// http request PUT Request
+// Acess Private
 export const updateProfile = async (req, res) => {
   const { userId } = req.user;
   const { name, email, ongoingCourses, completedCourses } = req.body;
@@ -33,6 +41,10 @@ export const updateProfile = async (req, res) => {
   }
 };
 
+
+// desc 
+// http request DELETE Request
+// Acess Private
 export const deleteProfile = async (req, res) => {
   const { userId } = req.user;
   try {
