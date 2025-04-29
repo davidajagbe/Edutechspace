@@ -41,7 +41,7 @@ const Signup = () => {
 
       if (signupError) throw signupError;
 
-      Cookies.set('token', data.session.access_token, { expires: 1 });
+      Cookies.set('token', data.session.access_token, { expires: 7 });
       localStorage.setItem('user', JSON.stringify(data.user));
       navigate('/course');
     } catch (err) {

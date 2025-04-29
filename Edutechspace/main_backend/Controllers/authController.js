@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import supabase from '../config/Superbase-client.js';
 import fetch from 'node-fetch';
+import CookieToken from '../utils/CookieToken.js';
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -8,8 +9,7 @@ export const login = async (req, res) => {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw new Error(error.message);
 
-    const token = jwt.sign({ userId: data.user.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-    res.cookie('token', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+    const token = CookieToken(res, data.user.id);
     res.json({ user: data.user, token });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -26,8 +26,7 @@ export const signup = async (req, res) => {
     });
     if (error) throw new Error(error.message);
 
-    const token = jwt.sign({ userId: data.user.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-    res.cookie('token', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+    const token = CookieToken(res, data.user.id);
     res.json({ user: data.user, token });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -47,8 +46,7 @@ export const googleLogin = async (req, res) => {
     });
     if (error) throw new Error(error.message);
 
-    const token = jwt.sign({ userId: data.user.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-    res.cookie('token', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+    const token = CookieToken(res, data.user.id);
     res.json({ user: data.user, token });
   } catch (err) {
     res.status(400).json({ error: err.message });
