@@ -4,14 +4,14 @@ import { Dialog,DialogPanel,DialogTitle } from '@headlessui/react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-const LogoutDialog = ({ isOpen, onClose, setIsLoggedIn, setUserName }) => {
+const LogoutDialog = ({ isOpen, onClose, setIsLoggedIn, setUser }) => {
   const navigate = useNavigate();
 
   const handleConfirmLogout = () => {
     Cookies.remove('token');
     localStorage.removeItem('user');
     setIsLoggedIn(false);
-    setUserName('');
+    setUser('');
     onClose();
     navigate('/');
   };

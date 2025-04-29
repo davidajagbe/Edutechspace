@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { UserCircleIcon, CheckCircleIcon, BookOpenIcon, FlagIcon, ClockIcon } from "@heroicons/react/24/solid";
 import UserGoalDialog from "../component/dialog/UserGoalDialog";
 import CourseProgress from "../component/CourseProgress";
+import { Link } from "react-router-dom";
 
 const UserDashboard = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -27,9 +28,9 @@ const UserDashboard = () => {
               Welcome back! Continue your learning journey and keep up your great work.🚀
             </p>
           </div>
-          {user?.profileImage ? (
+          {user?.picture ? (
             <img
-              src={user.profileImage}
+              src={user.picture}
               alt={user.name}
               className="w-20 h-20 object-cover rounded-full border-4 border-gray-300"
             />
@@ -77,18 +78,18 @@ const UserDashboard = () => {
       <div className="bg-white p-6 rounded-lg shadow-md mt-6">
         <h2 className="text-xl font-semibold mb-4">Explore Courses</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-gray-50 p-4 rounded-lg shadow-md flex flex-col items-center">
+          <Link to={'/course/cybersecuritycourse'} className="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center hover:shadow-lg cursor-pointer transition-shadow duration-300">
             <BookOpenIcon className="text-blue-950 w-10 h-10" />
             <p className="mt-2 font-medium">Cybersecurity</p>
-          </div>
-          <div className="bg-gray-50 p-4 rounded-lg shadow-md flex flex-col items-center">
+          </Link>
+          <Link to={'/course/mlcourse'} className="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center hover:shadow-lg cursor-pointer transition-shadow duration-300">
             <BookOpenIcon className="text-blue-950 w-10 h-10" />
             <p className="mt-2 font-medium">Machine Learning</p>
-          </div>
-          <div className="bg-gray-50 p-4 rounded-lg shadow-md flex flex-col items-center">
+          </Link>
+          <Link to={'/course/backendcourse'} className="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center hover:shadow-lg cursor-pointer transition-shadow duration-300">
             <BookOpenIcon className="text-blue-950 w-10 h-10" />
-            <p className="mt-2 font-medium">AI & Data Science</p>
-          </div>
+            <p className="mt-2 font-medium">Backend Developmemt</p>
+          </Link>
         </div>
       </div>
 

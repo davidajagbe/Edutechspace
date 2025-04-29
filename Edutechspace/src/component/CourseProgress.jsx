@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CourseProgress = () => {
   const progressData = [
@@ -19,9 +20,9 @@ const CourseProgress = () => {
           </div>
         </div>
       ))}
-        <button className="bg-slate-600 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-950 ">
-            Resume Learning
-        </button>
+        <Link to={'/course/frontendcourse'} className="bg-slate-600 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-950 ">
+          Resume Learning
+        </Link>
     </div>
   );
 };
