@@ -1,9 +1,11 @@
 import express from 'express';
-import {getProfile, updateProfile, deleteProfile} from '../Controllers/userController.js';;
+import { getProfile, updateProfile, deleteProfile } from '../Controllers/userController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
-router.get('/profile', getProfile);
-router.put('/profile', updateProfile);
-router.delete('/profile', deleteProfile);
 
-export default router
+router.get('/profile', protect, getProfile);  
+router.put('/profile', protect, updateProfile);
+router.delete('/profile', protect, deleteProfile); 
+
+export default router;

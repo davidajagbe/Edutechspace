@@ -3,7 +3,11 @@ import { motion } from "framer-motion";
 import { UserCircleIcon, CheckCircleIcon, BookOpenIcon, FlagIcon, ClockIcon } from "@heroicons/react/24/solid";
 import UserGoalDialog from "../component/dialog/UserGoalDialog";
 import CourseProgress from "../component/CourseProgress";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+import LoadingPage from "./LoadingPage";
+>>>>>>> 0261833 (user routes and minor frontend changes)
 
 const UserDashboard = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

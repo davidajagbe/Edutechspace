@@ -36,7 +36,7 @@ const Navbar = () => {
   return (
     <>
       <header className="sticky top-0 z-50 backdrop-blur-md border border-white/10">
-        <nav className="px-10 py-7 border-y-4">
+        <nav className="px-10 py-7">
           <div className="relative flex items-center justify-between">
             <NavLink to="/" className="relative z-10 pr-4 xl:pr-0">
               <img className="h-10" src={logoiii} alt="RUNTechSpace Logo" />
