@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }) => {
             console.error('initializeAuth: Error parsing localStorage or fetching profile:', err);
             Cookies.remove('token');
             localStorage.removeItem('user');
+            localStorage.removeItem('token');
             toast.error('Session expired. Please log in again.');
             setIsAuthenticated(false);
             setUser(null);
@@ -66,6 +67,7 @@ export const AuthProvider = ({ children }) => {
 
       const userData = response.data;
       Cookies.set('token', response.data.token, { expires: 7 });
+      localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
       setIsAuthenticated(true);
@@ -93,6 +95,7 @@ export const AuthProvider = ({ children }) => {
 
       const userData = response.data;
       Cookies.set('token', response.data.token, { expires: 7 });
+      localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
       setIsAuthenticated(true);
@@ -117,6 +120,7 @@ export const AuthProvider = ({ children }) => {
 
       const userData = response.data;
       Cookies.set('token', response.data.token, { expires: 1 });
+      localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
       setIsAuthenticated(true);
@@ -138,6 +142,7 @@ export const AuthProvider = ({ children }) => {
       await axios.post('http://localhost:8000/api/auth/logout');
       Cookies.remove('token');
       localStorage.removeItem('user');
+      localStorage.removeItem('token');
       setUser(null);
       setIsAuthenticated(false);
       toast.success('Logged out successfully!');
@@ -146,6 +151,7 @@ export const AuthProvider = ({ children }) => {
       console.error('logout: Error:', err);
       Cookies.remove('token');
       localStorage.removeItem('user');
+      localStorage.removeItem('token');
       setUser(null);
       setIsAuthenticated(false);
       toast.info('Logged out successfully (client-side).');
@@ -167,7 +173,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       console.log('fetchProfile: Making API request...');
-      const response = await axios.get('http://localhost:8000/api/users/profile', {
+      const response = await axios.get('http://localhost:8000/api/user/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -178,6 +184,7 @@ export const AuthProvider = ({ children }) => {
       setUser(userData);
       setIsAuthenticated(true);
       localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('token', token);
       console.log('fetchProfile: User set and stored in localStorage:', userData);
       toast.success('Profile loaded successfully!');
       return userData;
@@ -189,6 +196,7 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(false);
       Cookies.remove('token');
       localStorage.removeItem('user');
+      localStorage.removeItem('token');
       setUser(null);
       throw err;
     } finally {
@@ -209,15 +217,16 @@ export const AuthProvider = ({ children }) => {
       }
 
       console.log('deleteAccount: Making API request...');
-      await axios.delete('http://localhost:8000/api/users/profile', {
+      const response = await axios.delete('http://localhost:8000/api/user/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      console.log('deleteAccount: Account deleted successfully');
+      console.log(' ._deleteAccount: API Response:', response.data);
       Cookies.remove('token');
       localStorage.removeItem('user');
+      localStorage.removeItem('token');
       setUser(null);
       setIsAuthenticated(false);
       toast.success('Account deleted successfully.');

@@ -4,6 +4,8 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routers/authRoutes.js';
 import userRoutes from './routers/userRoutes.js';
+import courseRoutes from './routers/courseRoutes.js';
+
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -20,6 +22,7 @@ app.use(express.urlencoded({ extended: true })); // Parse x-www-form-urlencoded 
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/course', courseRoutes);
 
 // Error Handling
 app.use((err, req, res, next) => {

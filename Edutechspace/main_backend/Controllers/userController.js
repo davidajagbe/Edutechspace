@@ -72,8 +72,8 @@ export const updateProfile = async (req, res) => {
 };
 
 // desc Delete User Profile
-// http request DELETE Request
-// Access Private
+// http DELETE Request
+// Access PRIVATE
 export const deleteProfile = async (req, res) => {
   console.log('deleteProfile: req.user:', req.user);
   if (!req.user || !req.user.userId) {
@@ -82,13 +82,21 @@ export const deleteProfile = async (req, res) => {
   }
 
   const { userId } = req.user;
+  console.log('deleteProfile: Attempting to delete userId:', userId);
+
   try {
-    const { error } = await supabase.auth.admin.deleteUser(userId);
-    if (error) {
-      console.error('deleteProfile: Supabase error:', error.message);
-      throw new Error(error.message);
+    // Delete dependent records first
+    const { error: progressError } = await supabase
+      .from('course_progress')
+      .delete()
+      .eq('user_id', userId);
+
+    if (progressError) {
+      console.error('deleteProfile: Course progress delete error:', progressError.message);
+      throw new Error(progressError.message);
     }
 
+    // Delete from users table
     const { error: dbError } = await supabase
       .from('users')
       .delete()
@@ -97,6 +105,13 @@ export const deleteProfile = async (req, res) => {
     if (dbError) {
       console.error('deleteProfile: Database delete error:', dbError.message);
       throw new Error(dbError.message);
+    }
+
+    // Delete from Supabase auth
+    const { error: authError } = await supabase.auth.admin.deleteUser(userId);
+    if (authError) {
+      console.error('deleteProfile: Supabase auth delete error:', authError.message);
+      throw new Error(authError.message);
     }
 
     console.log('deleteProfile: Account deleted successfully for userId:', userId);

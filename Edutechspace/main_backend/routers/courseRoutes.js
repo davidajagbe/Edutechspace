@@ -1,10 +1,10 @@
 import express from 'express';
 import { getCourseProgress, getCourses } from '../Controllers/courseController.js';
-import authMiddleware from '../middleware/authMiddleware.js';
+import {protect} from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/progress/:userId', authMiddleware, getCourseProgress);
+router.get('/progress/:userId', protect, getCourseProgress);
 router.get('/list', getCourses);
 // router.post('/upload', authMiddleware, uploadResource);
 
