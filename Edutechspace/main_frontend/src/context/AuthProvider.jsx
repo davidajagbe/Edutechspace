@@ -3,6 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { supabase } from '../../db/Superbase-client';
 
 export const AuthContext = createContext();
 
@@ -17,33 +18,41 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       console.log('initializeAuth: Starting');
       try {
-        const token = Cookies.get('token');
-        console.log('initializeAuth: Initial token:', token);
-
-        if (token) {
-          try {
-            const userData = localStorage.getItem('user');
-            const storedUser = userData ? JSON.parse(userData) : null;
-            if (storedUser) {
-              setUser(storedUser);
-              setIsAuthenticated(true);
-              console.log('initializeAuth: User set from localStorage:', storedUser);
-            } else {
-              console.log('initializeAuth: No user in localStorage, fetching profile...');
-              await fetchProfile();
-              console.log('initializeAuth: fetchProfile completed');
-            }
-          } catch (err) {
-            console.error('initializeAuth: Error parsing localStorage or fetching profile:', err);
-            Cookies.remove('token');
-            localStorage.removeItem('user');
-            localStorage.removeItem('token');
-            toast.error('Session expired. Please log in again.');
-            setIsAuthenticated(false);
-            setUser(null);
-          }
+        // Check Supabase session for Google-authenticated users
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          console.log('initializeAuth: Supabase session found:', session.user);
+          await syncGoogleUser(session.user);
         } else {
-          console.log('initializeAuth: No token found.');
+          // Check for email-authenticated users via token
+          const token = Cookies.get('token');
+          console.log('initializeAuth: Initial token:', token);
+
+          if (token) {
+            try {
+              const userData = localStorage.getItem('user');
+              const storedUser = userData ? JSON.parse(userData) : null;
+              if (storedUser) {
+                setUser(storedUser);
+                setIsAuthenticated(true);
+                console.log('initializeAuth: User set from localStorage:', storedUser);
+              } else {
+                console.log('initializeAuth: No user in localStorage, fetching profile...');
+                await fetchProfile();
+                console.log('initializeAuth: fetchProfile completed');
+              }
+            } catch (err) {
+              console.error('initializeAuth: Error parsing localStorage or fetching profile:', err);
+              Cookies.remove('token');
+              localStorage.removeItem('user');
+              localStorage.removeItem('token');
+              toast.error('Session expired. Please log in again.');
+              setIsAuthenticated(false);
+              setUser(null);
+            }
+          } else {
+            console.log('initializeAuth: No token or session found.');
+          }
         }
       } catch (err) {
         console.error('initializeAuth: Unexpected error:', err);
@@ -57,6 +66,50 @@ export const AuthProvider = ({ children }) => {
     initializeAuth();
   }, []);
 
+  const syncGoogleUser = async (supabaseUser) => {
+    try {
+      // Upsert user to handle potential race conditions
+      const { data: userData, error: upsertError } = await supabase
+        .from('users')
+        .upsert(
+          {
+            id: supabaseUser.id,
+            name: supabaseUser.user_metadata.name || supabaseUser.email.split('@')[0],
+            email: supabaseUser.email,
+            picture: supabaseUser.user_metadata.picture || null,
+            phone: supabaseUser.user_metadata.phone || null,
+            ongoingcourses: 0,
+            completedcourses: 0,
+            password: null, // Google users don't have passwords
+          },
+          { onConflict: 'id' }
+        )
+        .select('id, name, email, picture, ongoingcourses, completedcourses, password, phone')
+        .single();
+
+      if (upsertError) {
+        console.error('syncGoogleUser: Database upsert error:', upsertError.message);
+        throw new Error(upsertError.message);
+      }
+
+      // Generate JWT token via backend
+      const response = await axios.post('http://localhost:8000/api/auth/generate-token', {
+        userId: userData.id,
+      });
+
+      const userInfo = response.data; // Includes id, name, email, picture, ongoingcourses, completedcourses, password, phone, token
+      Cookies.set('token', userInfo.token, { expires: 7 });
+      localStorage.setItem('token', userInfo.token);
+      localStorage.setItem('user', JSON.stringify(userInfo));
+      setUser(userInfo);
+      setIsAuthenticated(true);
+      console.log('syncGoogleUser: User synced and token generated:', userInfo);
+    } catch (err) {
+      console.error('syncGoogleUser: Error:', err.message);
+      throw err;
+    }
+  };
+
   const login = async (email, password) => {
     setLoading(true);
     try {
@@ -66,8 +119,8 @@ export const AuthProvider = ({ children }) => {
       });
 
       const userData = response.data;
-      Cookies.set('token', response.data.token, { expires: 7 });
-      localStorage.setItem('token', response.data.token);
+      Cookies.set('token', userData.token, { expires: 7 });
+      localStorage.setItem('token', userData.token);
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
       setIsAuthenticated(true);
@@ -94,8 +147,8 @@ export const AuthProvider = ({ children }) => {
       });
 
       const userData = response.data;
-      Cookies.set('token', response.data.token, { expires: 7 });
-      localStorage.setItem('token', response.data.token);
+      Cookies.set('token', userData.token, { expires: 7 });
+      localStorage.setItem('token', userData.token);
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
       setIsAuthenticated(true);
@@ -111,25 +164,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const googleLogin = async (accessToken) => {
+  const googleLogin = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8000/api/auth/googleLogin', {
-        access_token: accessToken,
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + '/course',
+        },
       });
 
-      const userData = response.data;
-      Cookies.set('token', response.data.token, { expires: 1 });
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(userData));
-      setUser(userData);
-      setIsAuthenticated(true);
-      toast.success('Logged in with Google successfully!');
-      navigate('/course');
-      return userData;
+      if (error) {
+        console.error('googleLogin: Supabase error:', error.message);
+        toast.error('Failed to log in with Google');
+        throw error;
+      }
+      // User data is synced in initializeAuth after redirect
     } catch (err) {
-      const errorMsg = err.response?.data?.error || 'Failed to log in with Google';
-      toast.error(errorMsg);
+      console.error('googleLogin: Error:', err.message);
+      toast.error('Failed to log in with Google');
       throw err;
     } finally {
       setLoading(false);
@@ -140,6 +193,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       await axios.post('http://localhost:8000/api/auth/logout');
+      await supabase.auth.signOut();
       Cookies.remove('token');
       localStorage.removeItem('user');
       localStorage.removeItem('token');
@@ -223,7 +277,8 @@ export const AuthProvider = ({ children }) => {
         },
       });
 
-      console.log(' ._deleteAccount: API Response:', response.data);
+      console.log('deleteAccount: API Response:', response.data);
+      await supabase.auth.signOut();
       Cookies.remove('token');
       localStorage.removeItem('user');
       localStorage.removeItem('token');

@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import supabase from '../config/supabase.js';
-import fetch from 'node-fetch'
-import bcrypt from 'bcrypt';;
+import bcrypt from 'bcrypt';
 
 export const login = async (req, res) => {
   try {
@@ -24,10 +23,10 @@ export const login = async (req, res) => {
     }
 
     const { data: userData, error: dbError } = await supabase
-    .from('users')
-    .select('id, name, email, picture, ongoingcourses, completedcourses, password, phone')
-    .eq('email', email)
-    .single();
+      .from('users')
+      .select('id, name, email, picture, ongoingcourses, completedcourses, password, phone')
+      .eq('email', email)
+      .single();
 
     if (dbError || !userData) {
       return res.status(400).json({ error: 'Invalid credentials' });
@@ -108,59 +107,6 @@ export const signup = async (req, res) => {
   }
 };
 
-export const googleLogin = async (req, res) => {
-  try {
-    if (!req.body) {
-      console.error('googleLogin: Request body is missing');
-      return res.status(400).json({ error: 'Request body is missing' });
-    }
-
-    const { access_token } = req.body;
-    console.log('googleLogin: Attempt with access_token:', access_token ? 'provided' : 'missing');
-
-    if (!access_token) {
-      return res.status(400).json({ error: 'Access token is required' });
-    }
-
-    const userInfo = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-      headers: { Authorization: `Bearer ${access_token}` },
-    }).then((res) => res.json());
-
-    if (userInfo.error) {
-      console.error('googleLogin: Google API error:', userInfo.error);
-      return res.status(400).json({ error: 'Invalid Google access token' });
-    }
-
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { access_token },
-    });
-
-    if (error) {
-      console.error('googleLogin: Supabase error:', error.message);
-      return res.status(400).json({ error: error.message });
-    }
-
-    const { data: userData, error: dbError } = await supabase
-      .from('users')
-      .select('id, name, email, picture, ongoingcourses, completedcourses, password, phone')
-      .eq('id', data.user.id)
-      .single();
-
-    if (dbError) {
-      console.error('googleLogin: Database error:', dbError.message);
-      return res.status(400).json({ error: dbError.message });
-    }
-
-    const token = jwt.sign({ userId: data.user.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-    console.log('googleLogin: User data:', userData);
-    res.status(200).json(userData);
-  } catch (err) {
-    console.error('googleLogin: Server error:', err.message);
-    res.status(500).json({ error: 'Server error during Google login' });
-  }
-};
-
 export const logout = async (req, res) => {
   try {
     const { error } = await supabase.auth.signOut();
@@ -173,5 +119,33 @@ export const logout = async (req, res) => {
   } catch (err) {
     console.error('logout: Server error:', err.message);
     res.status(500).json({ error: 'Server error during logout' });
+  }
+};
+
+export const generateToken = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    // Verify user exists in the users table
+    const { data: userData, error: dbError } = await supabase
+      .from('users')
+      .select('id, name, email, picture, ongoingcourses, completedcourses, password, phone')
+      .eq('id', userId)
+      .single();
+
+    if (dbError || !userData) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const token = jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    console.log('Genereted Token:', token);
+    console.log('JWT secret:', process.env.JWT_SECRET);
+    res.status(200).json({ ...userData, token });
+  } catch (err) {
+    console.error('generateToken: Server error:', err.message);
+    res.status(500).json({ error: 'Server error during token generation' });
   }
 };

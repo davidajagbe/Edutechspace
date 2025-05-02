@@ -100,9 +100,9 @@ const UserProfile = () => {
               className="w-48 h-48 object-cover rounded-full border-4 border-blue-950 shadow-lg"
             />
             <h2 className="text-2xl font-semibold mt-4 text-gray-900">
-              {user.name || 'John Doe'}
+              {user.name || 'Unknown User'}
             </h2>
-            <p className="text-gray-600">{user.email}</p>
+            <p className="text-gray-600">{user.email || 'No email'}</p>
 
             <div className="flex justify-between gap-6 mt-8">
               <div className="text-center">
@@ -170,7 +170,7 @@ const UserProfile = () => {
               <label className="block text-gray-700 font-medium mb-2 text-sm">Password</label>
               <input
                 type="password"
-                value={user.password ? '********' : ''}
+                value={user.password ? '********' : 'N/A'}
                 className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-200 focus:outline-none bg-gray-100 text-gray-700"
                 readOnly
               />
@@ -179,7 +179,7 @@ const UserProfile = () => {
               <label className="block text-gray-700 font-medium mb-2 text-sm">Phone</label>
               <input
                 type="tel"
-                value={user.phone || ''}
+                value={user.phone || 'Not provided'}
                 className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-200 focus:outline-none bg-gray-100 text-gray-700"
                 readOnly
               />
@@ -188,7 +188,7 @@ const UserProfile = () => {
               <label className="block text-gray-700 font-medium mb-2 text-sm">Email</label>
               <input
                 type="email"
-                value={user.email || ''}
+                value={user.email || 'Not provided'}
                 className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-200 focus:outline-none bg-gray-100 text-gray-700"
                 readOnly
               />
