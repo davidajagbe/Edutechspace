@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import supabase from "../config/supabase.js";
-import { supabaseAdmin } from "../config/supabase.js";
 import bcrypt from "bcrypt";
 
 export const login = async (req, res) => {
@@ -17,7 +16,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ error: "Email and password are required" });
     }
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -28,9 +27,7 @@ export const login = async (req, res) => {
 
     const { data: userData, error: dbError } = await supabase
       .from("users")
-      .select(
-        "id, name, email, picture, ongoingcourses, completedcourses, password, phone"
-      )
+      .select("password")
       .eq("email", email)
       .single();
 
@@ -46,10 +43,10 @@ export const login = async (req, res) => {
     const token = jwt.sign({ userId: userData.id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
-    res.status(200).json({ ...userData, token });
+    return res.status(200).json({ token });
   } catch (err) {
     console.error("login: Server error:", err.message);
-    res.status(500).json({ error: "Server error during login" });
+    return res.status(500).json({ error: "Server error during login" });
   }
 };
 
@@ -108,10 +105,10 @@ export const signup = async (req, res) => {
     const token = jwt.sign({ userId: data.user.id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
-    res.status(201).json({ token });
+    return res.status(201).json({ token });
   } catch (err) {
     console.error("signup: Server error:", err.message);
-    res.status(500).json({ error: "Server error during signup" });
+    return res.status(500).json({ error: "Server error during signup" });
   }
 };
 
