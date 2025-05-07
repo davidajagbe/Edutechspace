@@ -14,7 +14,7 @@ export const getProfile = async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('users')
-      .select('id, name, email, picture, ongoingcourses, completedcourses, password, phone')
+      .select('id, name, email, picture, ongoingcourses, completedcourses, phone')
       .eq('id', userId)
       .single();
 
