@@ -1,19 +1,18 @@
 import jwt from "jsonwebtoken";
-import supabase from "../config/supabase.js";
+import supabase, { supabaseAdmin } from "../config/supabase.js";
 import bcrypt from "bcrypt";
+import { AppError } from "../middleware/errorHandler.js";
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   try {
     if (!req.body) {
-      console.error("login: Request body is missing");
-      return res.status(400).json({ error: "Request body is missing" });
+      throw new AppError("Request body is missing", 400);
     }
 
     const { email, password } = req.body;
-    console.log("login: Attempt:", { email });
 
     if (!email || !password) {
-      return res.status(400).json({ error: "Email and password are required" });
+      throw new AppError("Email and password are required", 400);
     }
 
     const { error } = await supabase.auth.signInWithPassword({
@@ -21,8 +20,7 @@ export const login = async (req, res) => {
       password,
     });
     if (error) {
-      console.error("login: Supabase error:", error.message);
-      return res.status(400).json({ error: error.message });
+      throw new AppError(error.message, 400);
     }
 
     const { data: userData, error: dbError } = await supabase
@@ -32,12 +30,12 @@ export const login = async (req, res) => {
       .single();
 
     if (dbError || !userData) {
-      return res.status(400).json({ error: "Invalid credentials" });
+      throw new AppError("Invalid credentials", 400);
     }
 
     const isValid = await bcrypt.compare(password, userData.password);
     if (!isValid) {
-      return res.status(400).json({ error: "Invalid credentials" });
+      throw new AppError("Invalid credentials", 400);
     }
 
     const token = jwt.sign({ userId: userData.id }, process.env.JWT_SECRET, {
@@ -45,24 +43,20 @@ export const login = async (req, res) => {
     });
     return res.status(200).json({ token });
   } catch (err) {
-    console.error("login: Server error:", err.message);
-    return res.status(500).json({ error: "Server error during login" });
+    next(err);
   }
 };
 
-export const signup = async (req, res) => {
+export const signup = async (req, res, next) => {
   try {
     if (!req.body) {
-      console.error("signup: Request body is missing");
-      return res.status(400).json({ error: "Request body is missing" });
+      throw new AppError("Request body is missing", 400);
     }
 
     const { name, email, phone, password } = req.body;
 
     if (!name || !email || !password) {
-      return res
-        .status(400)
-        .json({ error: "Name, email, and password are required" });
+      throw new AppError("Name, email, and password are required", 400);
     }
 
     const { data, error } = await supabase.auth.signUp({
@@ -72,9 +66,9 @@ export const signup = async (req, res) => {
     });
 
     if (error) {
-      console.error("signup: Supabase error:", error.message);
-      return res.status(400).json({ error: error.message });
+      throw new AppError(error.message, 400);
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const { error: dbError } = await supabase.from("users").insert(
       {
@@ -91,15 +85,14 @@ export const signup = async (req, res) => {
     );
 
     if (dbError) {
-      console.error("signup: Database insert error:", dbError.message);
-      await supabase.auth.admin.deleteUser(data.user.id);
-      if (dbError.code == "23505")
-        return res
-          .status(403)
-          .json({ error: "An account with the provided email already exists" });
-      return res
-        .status(400)
-        .json({ error: "Failed to save user data: " + dbError.message });
+      await supabaseAdmin.auth.admin.deleteUser(data.user.id);
+      if (dbError.code == "23505") {
+        throw new AppError(
+          "An account with the provided email already exists",
+          403
+        );
+      }
+      throw new AppError("Failed to save user data: " + dbError.message, 400);
     }
 
     const token = jwt.sign({ userId: data.user.id }, process.env.JWT_SECRET, {
@@ -107,23 +100,20 @@ export const signup = async (req, res) => {
     });
     return res.status(201).json({ token });
   } catch (err) {
-    console.error("signup: Server error:", err.message);
-    return res.status(500).json({ error: "Server error during signup" });
+    next(err);
   }
 };
 
-export const logout = async (req, res) => {
+export const logout = async (req, res, next) => {
   try {
     const { error } = await supabase.auth.signOut();
     if (error) {
-      console.error("logout: Supabase error:", error.message);
-      return res.status(400).json({ error: error.message });
+      throw new AppError(error.message, 400);
     }
 
     res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
-    console.error("logout: Server error:", err.message);
-    res.status(500).json({ error: "Server error during logout" });
+    next(err);
   }
 };
 
