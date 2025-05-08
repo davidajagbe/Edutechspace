@@ -1,123 +1,98 @@
-import supabase from '../config/supabase.js';
+import supabase, { supabaseAdmin } from "../config/supabase.js";
+import { AppError } from "../middleware/errorHandler.js";
 
-// desc Get User Profile
-// http request GET Request
-// Access Private
-export const getProfile = async (req, res) => {
-  console.log('getProfile: req.user:', req.user);
-  if (!req.user || !req.user.userId) {
-    console.error('getProfile: req.user or req.user.userId is undefined');
-    return res.status(401).json({ error: 'Not authorized, user not found' });
-  }
-
-  const { userId } = req.user;
+export const getProfile = async (req, res, next) => {
   try {
+    console.log("getProfile: req.user:", req.user);
+    if (!req.user || !req.user.userId) {
+      throw new AppError("Not authorized, user not found", 401);
+    }
+
+    const { userId } = req.user;
     const { data, error } = await supabase
-      .from('users')
-      .select('id, name, email, picture, ongoingcourses, completedcourses, phone')
-      .eq('id', userId)
+      .from("users")
+      .select(
+        "id, name, email, picture, ongoingcourses, completedcourses, phone"
+      )
+      .eq("id", userId)
       .single();
 
     if (error) {
-      console.error('getProfile: Supabase error:', error.message);
-      throw new Error(error.message);
+      throw new AppError(error.message, 400);
     }
 
     if (!data) {
-      console.error('getProfile: User not found');
-      return res.status(404).json({ error: 'User not found' });
+      throw new AppError("User not found", 404);
     }
 
-    console.log('getProfile: Profile data:', data);
-    res.status(200).json(data); // Return data directly, not wrapped in { user: data }
+    return res.status(200).json(data);
   } catch (err) {
-    console.error('getProfile: Error:', err.message);
-    res.status(400).json({ error: err.message });
+    next(err);
   }
 };
 
-// desc Update User Profile
-// http request PUT Request
-// Access Private
-export const updateProfile = async (req, res) => {
-  console.log('updateProfile: req.user:', req.user);
-  if (!req.user || !req.user.userId) {
-    console.error('updateProfile: req.user or req.user.userId is undefined');
-    return res.status(401).json({ error: 'Not authorized, user not found' });
-  }
-
-  const { userId } = req.user;
-  const { name, email, phone, password, ongoingcourses, completedcourses } = req.body;
-  console.log('updateProfile: Update attempt:', { name, email, phone, password, ongoingcourses, completedcourses });
-
+export const updateProfile = async (req, res, next) => {
   try {
+    if (!req.user || !req.user.userId) {
+      throw new AppError("Not authorized, user not found", 401);
+    }
+
+    const { userId } = req.user;
+    const { name, email, phone, password, ongoingcourses, completedcourses } =
+      req.body;
+
     const { data, error } = await supabase
-      .from('users')
-      .update({ name, email, phone, password, ongoingcourses, completedcourses })
-      .eq('id', userId)
-      .select('id, name, email, picture, ongoingcourses, completedcourses, password, phone')
+      .from("users")
+      .update({
+        name,
+        email,
+        phone,
+        password,
+        ongoingcourses,
+        completedcourses,
+      })
+      .eq("id", userId)
+      .select(
+        "id, name, email, picture, ongoingcourses, completedcourses, password, phone"
+      )
       .single();
 
     if (error) {
-      console.error('updateProfile: Supabase error:', error.message);
-      throw new Error(error.message);
+      throw new AppError(error.message, 400);
     }
 
-    console.log('updateProfile: Updated data:', data);
-    res.status(200).json(data);
+    return res.status(200).json(data);
   } catch (err) {
-    console.error('updateProfile: Error:', err.message);
-    res.status(400).json({ error: err.message });
+    next(err);
   }
 };
 
-// desc Delete User Profile
-// http DELETE Request
-// Access PRIVATE
-export const deleteProfile = async (req, res) => {
-  console.log('deleteProfile: req.user:', req.user);
-  if (!req.user || !req.user.userId) {
-    console.error('deleteProfile: req.user or req.user.userId is undefined');
-    return res.status(401).json({ error: 'Not authorized, user not found' });
-  }
-
-  const { userId } = req.user;
-  console.log('deleteProfile: Attempting to delete userId:', userId);
-
+export const deleteProfile = async (req, res, next) => {
   try {
-    // Delete dependent records first
-    const { error: progressError } = await supabase
-      .from('course_progress')
-      .delete()
-      .eq('user_id', userId);
-
-    if (progressError) {
-      console.error('deleteProfile: Course progress delete error:', progressError.message);
-      throw new Error(progressError.message);
+    if (!req.user || !req.user.userId) {
+      throw new AppError("Not authorized, user not found", 401);
     }
 
-    // Delete from users table
+    const { userId } = req.user;
+
     const { error: dbError } = await supabase
-      .from('users')
+      .from("users")
       .delete()
-      .eq('id', userId);
+      .eq("id", userId);
 
     if (dbError) {
-      console.error('deleteProfile: Database delete error:', dbError.message);
-      throw new Error(dbError.message);
+      console.log("here")
+      throw new AppError(dbError.message, 400);
     }
 
-    // Delete from Supabase auth
-    const { error: authError } = await supabase.auth.admin.deleteUser(userId);
+    const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(userId);
     if (authError) {
-      console.error('deleteProfile: Supabase auth delete error:', authError.message);
-      throw new Error(authError.message);
+      console.log(authError)
+      throw new AppError(authError.message, 400);
     }
 
-    console.log('deleteProfile: Account deleted successfully for userId:', userId);
-    res.status(200).json({ message: 'Account deleted successfully' });
+   return res.status(200).json({ message: "Account deleted successfully" });
   } catch (err) {
-    console.error('deleteProfile: Error:', err.message);
-    res.status(400).json({ error: err.message });
+    next(err);
   }
 };
